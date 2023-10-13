@@ -6,6 +6,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .logo-wrapper{
+      display: flex;
+      align-items:center;
+      gap: 12px;
+      .logo{
+        color: #FFF;
+
+        font-family: Roboto;
+        font-size: 21px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px; /* 133.333% */
+      }
+    }
     .search-wrapper {
       display: flex;
       width: 436px;

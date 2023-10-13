@@ -1,0 +1,19 @@
+.brand {
+  padding: 0px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 46px 0px;
+  .title {
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 29px; /* 120.833% */
+  }
+  .list {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+}

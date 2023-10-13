@@ -4,12 +4,16 @@ import { Wrapper } from "../Wrapper/Wrapper";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Logo from "assets/logo.png";
 export const Header = () => {
   return (
     <div className="header-container">
       <Wrapper>
         <div className="header-content">
-          <div className="logo">VOUCHER SHOP</div>
+          <div className="logo-wrapper">
+            <img src={Logo} alt="" />
+            <div className="logo">Super Voucher</div>
+          </div>
           <div className="search-wrapper">
             <input
               type="search"

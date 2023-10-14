@@ -28,7 +28,7 @@ export const Header = () => {
           <div className="btns">
             <AccountCircleIcon className="ic" />
             <div className="btn">Đăng nhập</div>/
-            <div className="btn">Đăng ký</div>
+            {/* <div className="btn">Đăng ký</div> */}
           </div>
           {/* <div className="cart">
             <ShoppingCartOutlinedIcon />

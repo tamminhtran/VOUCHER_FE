@@ -15,5 +15,10 @@
     display: flex;
     flex-direction: row;
     gap: 12px;
+    width: 100%;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

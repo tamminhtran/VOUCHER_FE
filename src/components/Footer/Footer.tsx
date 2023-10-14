@@ -34,6 +34,8 @@ export const Footer = ({ ...props }) => {
                 </div>
               </div>
             </div>
+            <div className="pseudo2"></div>
+
             <div className="div-col-lg-4">
               <div className="div-card">
                 <div className="div-card-body2">
@@ -55,10 +57,10 @@ export const Footer = ({ ...props }) => {
                     </div>
                   </div>
                 </div>
-                <div className="pseudo"></div>
-                <div className="pseudo2"></div>
               </div>
             </div>
+            <div className="pseudo2"></div>
+
             <div className="div-col-lg-4">
               <div className="div-card">
                 <div className="div-card-body3">

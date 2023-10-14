@@ -3,7 +3,7 @@ import "./Header.scss";
 import { Wrapper } from "../Wrapper/Wrapper";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+// import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Logo from "assets/logo.png";
 export const Header = () => {
   return (
@@ -30,11 +30,11 @@ export const Header = () => {
             <div className="btn">Đăng nhập</div>/
             <div className="btn">Đăng ký</div>
           </div>
-          <div className="cart">
+          {/* <div className="cart">
             <ShoppingCartOutlinedIcon />
             <span>Giỏ hàng</span>
             <div className="num">4</div>
-          </div>
+          </div> */}
         </div>
       </Wrapper>
     </div>

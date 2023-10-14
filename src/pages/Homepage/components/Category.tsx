@@ -26,31 +26,26 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
       <div className="category">
         <div className="title">Danh mục</div>
         <div className="prev">
-          <KeyboardArrowLeftIcon />
+          <KeyboardArrowLeftIcon className="ic" />
         </div>
         <div className="next">
-          <KeyboardArrowRightIcon />
+          <KeyboardArrowRightIcon className="ic" />
         </div>
         <Slider {...settings}>
           <div className="card">
-            <img src={Cate1} alt="" />
-            <div className="bg1"></div>
+            <img src={Cate1} alt="" className="bg" />
           </div>{" "}
           <div className="card">
-            <img src={Cate2} alt="" />
-            <div className="bg2"></div>
+            <img src={Cate2} alt="" className="bg" />
           </div>{" "}
           <div className="card">
-            <img src={Cate3} alt="" />
-            <div className="bg3"></div>
+            <img src={Cate3} alt="" className="bg" />
           </div>{" "}
           <div className="card">
-            <img src={Cate4} alt="" />
-            <div className="bg4"></div>
+            <img src={Cate4} alt="" className="bg" />
           </div>
           <div className="card">
-            <img src={Cate4} alt="" />
-            <div className="bg4"></div>
+            <img src={Cate4} alt="" className="bg" />
           </div>
         </Slider>
       </div>

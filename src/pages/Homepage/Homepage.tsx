@@ -6,6 +6,7 @@ import { Products } from "./components/Products";
 import { Edus, Entertains, Games } from "./Homepage.hard";
 import { Wrapper } from "components/Wrapper/Wrapper";
 import "./Homepage.scss";
+import { toast } from "react-toastify";
 export const Homepage = () => {
   return (
     <div className="homepage">

@@ -10,7 +10,6 @@ export interface ICardProps {
   isSoldout?: boolean;
 }
 export const Card = (props: ICardProps) => {
-  console.log(props);
   return (
     <div className="card">
       <div className="top">

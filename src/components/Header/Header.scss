@@ -6,12 +6,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .logo-wrapper{
+    .logo-wrapper {
       display: flex;
-      align-items:center;
+      align-items: center;
       gap: 12px;
-      .logo{
-        color: #FFF;
+      .logo {
+        color: #fff;
 
         font-family: Roboto;
         font-size: 21px;
@@ -61,6 +61,10 @@
         font-weight: 500;
         cursor: pointer;
       }
+    }
+    .btn {
+      font-weight: 500;
+      cursor: pointer;
     }
     .cart {
       display: flex;

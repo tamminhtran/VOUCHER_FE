@@ -36,7 +36,6 @@ export const Products = ({ title, label, subtitle, data }: IProductsProps) => {
         className="more"
         onClick={() => {
           const ele = document.querySelector(".lst");
-          console.log(ele);
         }}
       >
         Xem thêm

@@ -4,7 +4,6 @@ import { Footer } from "./components/Footer/Footer";
 import { Homepage } from "./pages/Homepage/Homepage.tsx";
 import { Route, Routes } from "react-router-dom";
 import { Profile } from "pages/Profile/Profile.tsx";
-
 function App() {
   return (
     <div className="app">

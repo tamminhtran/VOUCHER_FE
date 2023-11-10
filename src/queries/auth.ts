@@ -27,6 +27,10 @@ export const signUp = (payload: ISignUp) => {
   return http.post("/account/api/signup", payload);
 };
 
-export const logOutAsync = () => {
-  return http.post("/account/api/logout");
+export const logOutAsync = (refreshToken: any) => {
+  return http.post("/account/api/logout", null, {
+    headers: {
+      Authorization: "Bearer" + refreshToken,
+    },
+  });
 };

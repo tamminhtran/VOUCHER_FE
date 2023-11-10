@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { logOut } from "redux/features/auth/authSlice";
 import { logOutAsync } from "queries/auth";
+import { selectRefreshToken } from "redux/features/auth/authSlice";
 export const Header = () => {
   const [isShowAuthPopup, setIsShowAuthPopup] = React.useState(false);
   const dispatch = useDispatch();
   const token = useSelector(selectAccessToken);
-  console.log(token);
+  const refreshToken = useSelector(selectRefreshToken);
   return (
     <div className="header-container">
       <Wrapper>
@@ -46,7 +47,8 @@ export const Header = () => {
               className="btn"
               onClick={() => {
                 dispatch(logOut());
-                logOutAsync()
+
+                logOutAsync(refreshToken)
                   .then((rs: any) => {
                     if (rs) {
                       toast.success(rs.message);

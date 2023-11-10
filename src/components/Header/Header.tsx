@@ -7,7 +7,9 @@ import { selectAccessToken } from "redux/features/auth/authSlice";
 import Logo from "assets/logo.png";
 import { AuthPopUp } from "components/AuthPopUp/AuthPopUp";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { logOut } from "redux/features/auth/authSlice";
+import { logOutAsync } from "queries/auth";
 export const Header = () => {
   const [isShowAuthPopup, setIsShowAuthPopup] = React.useState(false);
   const dispatch = useDispatch();
@@ -40,7 +42,19 @@ export const Header = () => {
               <div className="btn">Đăng ký</div>
             </div>
           ) : (
-            <div className="btn" onClick={() => dispatch(logOut())}>
+            <div
+              className="btn"
+              onClick={() => {
+                dispatch(logOut());
+                logOutAsync()
+                  .then((rs: any) => {
+                    if (rs) {
+                      toast.success(rs.message);
+                    }
+                  })
+                  .catch((err): any => toast.error(err.response.data.error));
+              }}
+            >
               Đăng Xuất
             </div>
           )}

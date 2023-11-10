@@ -26,3 +26,7 @@ export const signIn = async (payload: ILogin) => {
 export const signUp = (payload: ISignUp) => {
   return http.post("/account/api/signup", payload);
 };
+
+export const logOutAsync = () => {
+  return http.post("/account/api/logout");
+};

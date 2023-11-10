@@ -30,7 +30,7 @@ export const signUp = (payload: ISignUp) => {
 export const logOutAsync = (refreshToken: any) => {
   return http.post("/account/api/logout", null, {
     headers: {
-      Authorization: "Bearer" + refreshToken,
+      Authorization: "Bearer " + refreshToken,
     },
   });
 };

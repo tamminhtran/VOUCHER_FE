@@ -5,16 +5,9 @@ export interface ILogin {
   password: String;
 }
 export interface ISignUp {
-  memberCode: String;
-  firstName: String;
-  lastName: String;
-  fullName: String;
   email: String;
-  address: String;
-  userName: String;
   password: String;
   phone: String;
-  roleName: String;
 }
 export const signIn = async (payload: ILogin) => {
   const rs = await http.post("/account/api/signin", null, {
@@ -33,4 +26,11 @@ export const logOutAsync = (refreshToken: any) => {
       Authorization: "Bearer " + refreshToken,
     },
   });
+};
+export const forgotPassword = (email: String) => {
+  return http.post(`/account/api/forgot_password?email=${email}`);
+};
+
+export const setPassword = (obj: any) => {
+  return http.put(`/account/api/set_password`, obj);
 };

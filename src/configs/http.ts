@@ -21,6 +21,7 @@ http.interceptors.response.use(
     return response.data;
   },
   function (error) {
+    toast.error(error.response.data.error);
     return Promise.reject(error);
   }
 );

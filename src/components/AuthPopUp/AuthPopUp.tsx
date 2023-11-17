@@ -3,16 +3,18 @@ import "./style.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ISignUp } from "queries/auth";
 import { signUp } from "queries/auth";
 import { toast } from "react-toastify";
-import { AxiosError } from "axios";
-import { ILogin } from "queries/auth";
 import { signIn } from "queries/auth";
 import { schemaSignIn } from "validate";
 import { schemaSignUp } from "validate";
 import { logIn } from "redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { Loading } from "components/Loading/Loading";
+import { forgotPassword } from "queries/auth";
+import { schemaForgotPassword } from "validate";
+import { schemaSetPassword } from "validate";
+import { setPassword } from "queries/auth";
 
 export const AuthPopUp = ({
   setVisibility,
@@ -22,167 +24,263 @@ export const AuthPopUp = ({
   const [activeTab, setActiveTab] = React.useState(0);
 
   const dispatch = useDispatch();
+  const [loading, setLoading] = React.useState(false);
+  const [isForgotPassword, setIsForgotPassword] = React.useState(false);
+  const [validEmail, setValidEmail] = React.useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignUp>({
+  } = useForm<any>({
     resolver: yupResolver(schemaSignUp),
   });
   const {
     register: register2,
     handleSubmit: handleSubmit2,
     formState: { errors: errors2 },
-  } = useForm<ILogin>({
+  } = useForm<any>({
     resolver: yupResolver(schemaSignIn),
   });
+  const {
+    register: register3,
+    handleSubmit: handleSubmit3,
+    formState: { errors: errors3 },
+  } = useForm({
+    resolver: yupResolver(schemaForgotPassword),
+  });
+  const {
+    register: register4,
+    handleSubmit: handleSubmit4,
+    formState: { errors: errors4 },
+  } = useForm({
+    resolver: yupResolver(schemaSetPassword),
+  });
 
-  const onSubmitSignIn = async (data: ILogin) => {
-    console.log(data);
-    signIn(data)
+  const onSubmitSignIn = async (data: any) => {
+    let obj = {
+      email: data.emailSignin,
+      password: data.passwordSignin,
+    };
+    setLoading(true);
+    signIn(obj)
       .then((rs: any) => {
         if (rs) {
+          setLoading(false);
           toast.success(rs.message);
           dispatch(logIn(rs.data));
           setVisibility(false);
         }
       })
-      .catch((err: any) => toast.error(err.response.data.error));
+      .catch((err: any) => {
+        toast.error("Something went wrong");
+        setLoading(false);
+      });
   };
-  const onSubmit = async (data: ISignUp) => {
+  const onSubmit = async (data: any) => {
     let obj = { ...data };
     delete obj.confirmPassword;
+    setLoading(true);
     signUp(obj)
       .then((rs: any) => {
         if (rs) {
           toast.success(rs.message);
           setVisibility(false);
+          setLoading(false);
         }
       })
-      .catch((er: AxiosError) => {
-        toast.error(er.response.data.error);
+      .catch((er: any) => {
+        toast.error("Something went wrong");
+        setLoading(false);
       });
   };
+  const onForGotPassword = async (data: any) => {
+    setLoading(true);
+    forgotPassword(data.email)
+      .then((rs: any) => {
+        if (rs) {
+          setLoading(false);
+          toast.success(rs.message);
+          setValidEmail(data.email);
+        }
+      })
+      .catch((er: any) => {
+        setLoading(false);
+        toast.error("Something went wrong");
+      });
+  };
+  const onSetPassword = async (data: any) => {
+    console.log(data);
+    let obj = {
+      email: validEmail,
+      newPassword: data.newpass,
+    };
+    console.log(obj);
+    setPassword(obj)
+      .then((rs: any) => {
+        if (rs) {
+          toast.success(rs.message);
+          setIsForgotPassword(false);
+        }
+      })
+      .catch((er: any) => {
+        toast.error("Something went wrong");
+      });
+  };
+  console.log("loading", loading);
   return (
     <div className="auth-pop-up">
       <div className="bg" onClick={() => setVisibility(false)}></div>
-      <div className="content">
-        <div className="ic" onClick={() => setVisibility(false)}>
-          <CloseIcon />
-        </div>
-        <div className="left">
-          <div className="tabs">
-            {["Đăng nhập", "Đăng ký"].map((item, key) => {
-              return (
-                <div
-                  className={activeTab === key ? "tab active" : "tab"}
-                  key={key}
-                  onClick={() => setActiveTab(key)}
-                >
-                  {item}
-                </div>
-              );
-            })}
-          </div>
-          {activeTab === 0 && (
-            <>
-              <div className="lb">
-                Đăng nhập để theo dõi đơn hàng, lưu danh sách sản phẩm yêu thích
-                và nhận nhiều ưu đãi hấp dẫn
+      {isForgotPassword ? (
+        validEmail === "" ? (
+          <div className="content">
+            <form onSubmit={handleSubmit3(onForGotPassword)}>
+              <div>
+                <label>Enter valid email</label>
+                <input {...register3("emailForgot")} />
+                {errors3.emailForgot && (
+                  <p>{errors3.emailForgot.message.toString()}</p>
+                )}
               </div>
-              <form onSubmit={handleSubmit2(onSubmitSignIn)}>
+              {loading ? (
+                <div className="loading">
+                  <Loading />
+                </div>
+              ) : (
+                <input type="submit" value="Check" />
+              )}
+              <div
+                className="cancel"
+                onClick={() => setIsForgotPassword(false)}
+              >
+                Cancel
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div className="content">
+            <form onSubmit={handleSubmit4(onSetPassword)}>
+              <div>
+                <label>Enter valid new password</label>
+                <input {...register4("newpass")} />
+                {errors4.newpass && <p>{errors4.newpass.message.toString()}</p>}
+              </div>
+              <div>
+                <label>Confirm new password</label>
+                <input {...register4("confirmnewpass")} />
+                {errors4.confirmnewpass && (
+                  <p>{errors4.confirmnewpass.message.toString()}</p>
+                )}
+              </div>
+              <input type="submit" value="OK" />
+              <div className="cancel" onClick={() => setValidEmail("")}>
+                Cancel
+              </div>
+            </form>
+          </div>
+        )
+      ) : (
+        <div className="content">
+          <div className="ic" onClick={() => setVisibility(false)}>
+            <CloseIcon />
+          </div>
+          <div className="left">
+            <div className="tabs">
+              {["Đăng nhập", "Đăng ký"].map((item, key) => {
+                return (
+                  <div
+                    className={activeTab === key ? "tab active" : "tab"}
+                    key={key}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
+            {activeTab === 0 && (
+              <>
+                <div className="lb">
+                  Đăng nhập để theo dõi đơn hàng, lưu danh sách sản phẩm yêu
+                  thích và nhận nhiều ưu đãi hấp dẫn
+                </div>
+                <form onSubmit={handleSubmit2(onSubmitSignIn)}>
+                  <div>
+                    <label>Email</label>
+                    <input {...register2("emailSignin")} />
+                    {errors2.emailSignin && (
+                      <p>{errors2.emailSignin.message.toString()}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label>Password</label>
+                    <input {...register2("passwordSignin")} type="password" />
+                    {errors2.passwordSignin && (
+                      <p>{errors2.passwordSignin.message.toString()}</p>
+                    )}
+                  </div>
+                  {loading ? (
+                    <div className="loading">
+                      <Loading />
+                    </div>
+                  ) : (
+                    <input type="submit" value="Đăng nhập" />
+                  )}
+                </form>
+                <div
+                  className="lb2"
+                  onClick={() => {
+                    setIsForgotPassword(true);
+                  }}
+                >
+                  Bạn quên mật khẩu?
+                </div>
+              </>
+            )}
+            {activeTab === 1 && (
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                   <label>Email</label>
-                  <input {...register2("email")} />
-                  {errors2.email && <p>{errors2.email.message.toString()}</p>}
+                  <input {...register("email")} />
+                  {errors.email && <p>{errors.email.message.toString()}</p>}
+                </div>{" "}
+                <div>
+                  <label>Phone</label>
+                  <input {...register("phone")} />
+                  {errors.phone && <p>{errors.phone.message.toString()}</p>}
                 </div>
                 <div>
                   <label>Password</label>
-                  <input {...register2("password")} type="password" />
-                  {errors2.password && (
-                    <p>{errors2.password.message.toString()}</p>
+                  <input
+                    {...register("password")}
+                    type="password"
+                    id="passSignUp"
+                  />
+                  {errors.password && (
+                    <p>{errors.password.message.toString()}</p>
                   )}
                 </div>
-                <input type="submit" value="Đăng nhập" />
+                <div>
+                  <label>Confirm Password</label>
+                  <input {...register("confirmPassword")} type="password" />
+                  {errors.confirmPassword && (
+                    <p>{errors.confirmPassword.message.toString()}</p>
+                  )}
+                </div>
+                {loading ? (
+                  <div className="loading">
+                    <Loading />
+                  </div>
+                ) : (
+                  <input type="submit" />
+                )}
               </form>
-              <div className="lb2">Bạn quên mật khẩu?</div>
-            </>
-          )}
-          {activeTab === 1 && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <label>User Name</label>
-                <input {...register("userName")} />
-                {errors.userName && <p>{errors.userName.message.toString()}</p>}
-              </div>{" "}
-              <div>
-                <label>Email</label>
-                <input {...register("email")} />
-                {errors.email && <p>{errors.email.message.toString()}</p>}
-              </div>
-              <div>
-                <label>Phone</label>
-                <input {...register("phone")} />
-                {errors.phone && <p>{errors.phone.message.toString()}</p>}
-              </div>{" "}
-              <div>
-                <label>Password</label>
-                <input
-                  {...register("password")}
-                  type="password"
-                  id="passSignUp"
-                />
-                {errors.password && <p>{errors.password.message.toString()}</p>}
-              </div>
-              <div>
-                <label>Confirm Password</label>
-                <input {...register("confirmPassword")} type="password" />
-                {errors.confirmPassword && (
-                  <p>{errors.confirmPassword.message.toString()}</p>
-                )}
-              </div>
-              <div>
-                <label>First Name</label>
-                <input {...register("firstName")} />
-                {errors.firstName && (
-                  <p>{errors.firstName.message.toString()}</p>
-                )}
-              </div>
-              <div>
-                <label>Last Name</label>
-                <input {...register("firstName")} />
-                {errors.lastName && <p>{errors.lastName.message.toString()}</p>}
-              </div>{" "}
-              <div>
-                <label>Full Name</label>
-                <input {...register("fullName")} />
-                {errors.fullName && <p>{errors.fullName.message.toString()}</p>}
-              </div>{" "}
-              <div>
-                <label>Address</label>
-                <input {...register("address")} />
-                {errors.address && <p>{errors.address.message.toString()}</p>}
-              </div>
-              <div>
-                <label>Member Code</label>
-                <input {...register("memberCode")} />
-                {errors.memberCode && (
-                  <p>{errors.memberCode.message.toString()}</p>
-                )}
-              </div>
-              <div>
-                <label>Role Name</label>
-                <input {...register("roleName")} />
-                {errors.roleName && <p>{errors.roleName.message.toString()}</p>}
-              </div>
-              <input type="submit" />
-            </form>
-          )}
+            )}
+          </div>
+          <div className="right">
+            <img src={require(`assets/homepage/auth.png`)} alt="" />
+          </div>
         </div>
-        <div className="right">
-          <img src={require(`assets/homepage/auth.png`)} alt="" />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

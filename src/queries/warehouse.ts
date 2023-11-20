@@ -6,3 +6,7 @@ export const getWarehouseByLabel = (id: number) => {
 export const getAllWarehouse = () => {
   return http.get(`/warehouse/api/all`);
 };
+
+export const getWarehouseDetail = (id: any) => {
+  return http.get(`/warehouse/api/${id}`);
+};

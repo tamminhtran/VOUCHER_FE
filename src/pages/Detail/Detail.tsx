@@ -1,23 +1,86 @@
 import { Wrapper } from "components/Wrapper/Wrapper";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Detail.scss";
+import { toast } from "react-toastify";
+import { getWarehouseDetail } from "queries/warehouse";
+import moment from "moment";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 export const Detail = () => {
   let { id } = useParams();
-  console.log(id);
+  const [data, setData] = React.useState<any>();
+  React.useEffect(() => {
+    getWarehouseDetail(id)
+      .then((rs: any) => {
+        if (rs) {
+          setData(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
+  }, [id]);
+  console.log(data);
+  const navigate = useNavigate();
   return (
     <div className="detail">
-      <Wrapper>
-        <div className="header">
-          <h1>ƯU ĐÃI ĐỘC QUYỀN TRÊN VINID KHI DI CHUYỂN CÙNG XANH SM</h1>
-          <div className="label">
-            <div className="time">23/09/2023</div>
-            <span>Tin Khuyến Mại</span>
+      {data ? (
+        <Wrapper>
+          <div
+            className="path"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <ArrowBackIosIcon className="ic" /> Home
           </div>
-        </div>
-        <div className="content">dsf</div>
-        <div className="btnBuy">MUA NGAY</div>
-      </Wrapper>
+          <div className="header">
+            <h1>{data.name}</h1>
+            <div className="label">
+              <div className="time">
+                {moment(data.availableTo).format("DD/MM/YYYY")}
+              </div>
+              <span>Tin Khuyến Mại</span>
+            </div>
+          </div>
+          <div className="content">
+            <div className="banner">
+              {data.bannerUrl !== null ? (
+                <img src={data.bannerUrl} alt="" />
+              ) : (
+                <img src={require(`assets/detail/default.jpg`)} alt="" />
+              )}
+            </div>
+            <h3>Thông tin voucher</h3>
+            <p className="note">
+              ** LƯU Ý: Voucher có hiệu lực đến{" "}
+              {moment(data.availableTo).format("DD/MM/YYYY")}
+            </p>
+            <h3>Điều kiện sử dụng</h3>
+            <p>{data.termtermOfUse}</p>
+            <h3>Hướng dẫn sử dụng voucher</h3>
+            <p>
+              <b>Bước 1: </b>Khách hàng đổi điểm lấy voucher và nhấn sao
+              chép/copy mã voucher nhận được trên ứng dụng VinID
+            </p>
+            <p>
+              <b>Bước 2: </b>Khách hàng đặt xe trên ứng dụng Xanh SM
+            </p>
+            <p>
+              <b> Bước 3: </b>Tại phần Ưu đãi/Offers trên ứng dụng Xanh SM,
+              khách hàng dán/paste mã voucher đã lấy từ ứng dụng VinID vào để sử
+              dụng
+            </p>
+            <p>
+              <b>Bước 4: </b>Mệnh giá voucher sẽ được trừ tiền vào cuốc xe
+            </p>
+            <p>Đổi điểm VinID nhận ưu đãi ngay!</p>
+          </div>
+          <div className="btnBuy">MUA NGAY</div>
+        </Wrapper>
+      ) : (
+        "No data"
+      )}
     </div>
   );
 };

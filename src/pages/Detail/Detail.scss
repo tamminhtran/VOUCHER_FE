@@ -2,6 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 48px 0px;
+  .path {
+    color: rgba(1, 18, 34, 0.3);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    transition: all 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .ic {
+      font-size: 14px;
+    }
+    &:hover {
+      color: black;
+    }
+  }
   .header {
     width: 100%;
     display: flex;
@@ -33,6 +52,42 @@
     }
   }
   .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .banner {
+      width: 80%;
+      height: auto;
+      img {
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      margin: 48px 0px;
+    }
+    h3 {
+      color: #22313f;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 36px; /* 128.571% */
+      width: 100%;
+    }
+    .note {
+      color: #22313f;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 30px;
+      width: 100%;
+    }
+    p {
+      width: 100%;
+      color: #22313f;
+      font-size: 18px;
+      font-style: normal;
+      line-height: 30px; /* 166.667% */
+    }
   }
   .btnBuy {
     display: flex;
@@ -53,6 +108,7 @@
     margin: 64px auto;
     cursor: pointer;
     transition: all 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     &:hover {
       background-color: rgb(16, 216, 16);
       transform: scale(1.05);

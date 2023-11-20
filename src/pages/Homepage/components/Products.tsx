@@ -1,8 +1,7 @@
 import { Wrapper } from "components/Wrapper/Wrapper";
 import React from "react";
-import { Card, ICardProps } from "./Card";
+import { Card } from "./Card";
 import "./Products.scss";
-import { useNavigate } from "react-router-dom";
 export interface IProductsProps {
   title?: String;
   label?: String;

@@ -36,26 +36,30 @@ export const Profile = () => {
   }, [token]);
   return (
     <Wrapper>
-      <div className="profile">
-        <div className="left">
-          <div className="tabs">
-            {TABS.map((t, key) => {
-              return (
-                <div
-                  className={activeTab === key ? "tab active" : "tab"}
-                  onClick={() => setActiveTab(key)}
-                >
-                  {t.ic} <span>{t.tab}</span>
-                </div>
-              );
-            })}
+      {token ? (
+        <div className="profile">
+          <div className="left">
+            <div className="tabs">
+              {TABS.map((t, key) => {
+                return (
+                  <div
+                    className={activeTab === key ? "tab active" : "tab"}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    {t.ic} <span>{t.tab}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="right">
+            {activeTab === 0 && info && <AccountTab data={info} />}
+            {activeTab === 1 && <OrdersTab />}
           </div>
         </div>
-        <div className="right">
-          {activeTab === 0 && info && <AccountTab data={info} />}
-          {activeTab === 1 && <OrdersTab />}
-        </div>
-      </div>
+      ) : (
+        <div className="warn"> Please sign in !</div>
+      )}
     </Wrapper>
   );
 };

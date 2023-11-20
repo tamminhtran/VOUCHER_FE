@@ -13,12 +13,15 @@ import { logOutAsync } from "queries/auth";
 import { selectRefreshToken } from "redux/features/auth/authSlice";
 import { getUserInfo } from "queries/auth";
 import { useNavigate } from "react-router-dom";
+import { getAllWarehouse } from "queries/warehouse";
 export const Header = () => {
   const [isShowAuthPopup, setIsShowAuthPopup] = React.useState(false);
   const dispatch = useDispatch();
   const token = useSelector(selectAccessToken);
   const refreshToken = useSelector(selectRefreshToken);
   const [info, setInfo] = useState<any>();
+  const [resultSearch, setResultSearch] = useState<any>();
+  const [allWarehouse, setAllWarehouse] = React.useState([]);
   const navigate = useNavigate();
   React.useEffect(() => {
     if (token)
@@ -29,6 +32,15 @@ export const Header = () => {
           }
         })
         .catch((err: any) => toast.error(err.message));
+    getAllWarehouse()
+      .then((rs: any) => {
+        if (rs) {
+          setAllWarehouse(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
   }, [token]);
   return (
     <div className="header-container">
@@ -44,11 +56,46 @@ export const Header = () => {
               type="search"
               name=""
               id=""
-              placeholder="Tìm kiếm sản phẩm"
+              placeholder="Tìm kiếm sản phẩm theo tên"
+              onChange={(e) => {
+                if (e.target.value) {
+                  let dt = allWarehouse.filter((item) =>
+                    item.name.toLowerCase().includes(e.target.value)
+                  );
+                  setResultSearch(dt);
+                } else {
+                  setResultSearch(null);
+                }
+              }}
             />
             <div className="ic-wrapper">
               <SearchIcon />
             </div>
+            {resultSearch && (
+              <div className="search-result">
+                <div className="label">Kết quả</div>
+                {resultSearch.length > 0 ? (
+                  <div className="rs">
+                    {resultSearch.map((item: any, key: any) => {
+                      return (
+                        <div
+                          className="row"
+                          key={key}
+                          onClick={() => {
+                            navigate(`/warehouse/${item.id}`);
+                            setResultSearch(null);
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  "No data"
+                )}
+              </div>
+            )}
           </div>
           {token && info ? (
             <div

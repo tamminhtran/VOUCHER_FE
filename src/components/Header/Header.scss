@@ -24,6 +24,40 @@
     .search-wrapper {
       display: flex;
       width: 436px;
+      position: relative;
+      transition: all 0.3s;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+      border-radius: 0.375rem;
+      .search-result {
+        position: absolute;
+        top: 62px;
+        left: 0px;
+        background-color: white;
+        width: 100%;
+        color: black;
+        padding: 12px;
+        border-radius: 0.375rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        .label {
+          font-size: 11px;
+          margin-bottom: 12px;
+        }
+        .rs {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          .row {
+            cursor: pointer;
+            padding: 12px 8px;
+            border-radius: 0.375rem;
+            transition: all 0.3s;
+            &:hover {
+              background-color: rgb(208, 243, 232);
+            }
+          }
+        }
+      }
       input {
         padding-left: 1rem;
         padding-right: 1rem;

@@ -15,6 +15,7 @@ import { forgotPassword } from "queries/auth";
 import { schemaForgotPassword } from "validate";
 import { schemaSetPassword } from "validate";
 import { setPassword } from "queries/auth";
+import { Link } from "react-router-dom";
 
 export const AuthPopUp = ({
   setVisibility,
@@ -229,6 +230,12 @@ export const AuthPopUp = ({
                     <input type="submit" value="Đăng nhập" />
                   )}
                 </form>
+                <Link to="http://localhost:8082/login/oauth2/code/google">
+                  <div className="btn-gg" onClick={() => {}}>
+                    <img src={require(`assets/gg.png`)} alt="" />
+                    Sign in with google
+                  </div>
+                </Link>
                 <div
                   className="lb2"
                   onClick={() => {

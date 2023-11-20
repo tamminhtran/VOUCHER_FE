@@ -153,7 +153,6 @@
           line-height: 21px; /* 150% */
           width: 100%;
           cursor: pointer;
-          margin-bottom: 42px;
         }
         span {
           font-size: 12px;
@@ -172,6 +171,27 @@
         font-style: normal;
         font-weight: 400;
         line-height: 21px; /* 150% */
+      }
+      a {
+        width: 100%;
+        text-decoration: none;
+      }
+      .btn-gg {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        justify-content: center;
+        margin-bottom: 42px;
+        border: 1px solid rgba(0, 0, 0, 0.24);
+        width: 100%;
+        padding: 8px;
+        border-radius: 8px;
+        background-color: white;
+        cursor: pointer;
+        img {
+          width: 32px;
+          height: 32px;
+        }
       }
       .lb2 {
         color: #2579f2;

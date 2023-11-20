@@ -18,18 +18,12 @@ export const AccountTab = ({ data }: Profile) => {
   const [loading, setLoading] = React.useState(false);
   console.log(obj);
   const handleEdit = () => {
-    const form = new FormData();
-    form.append("firstName", obj.firstName);
-    form.append("lastName", obj.lastName);
-    form.append("fullName", obj.fullName);
-    form.append("email", obj.email);
-    form.append("phone", obj.phone);
-    form.append("address", obj.address);
     setLoading(true);
-    editUser(form)
+    delete obj.avatarUrl;
+    editUser(obj)
       .then((rs: any) => {
         if (rs) {
-          toast.success(rs.data.message);
+          toast.success(rs.message);
           setLoading(false);
         }
       })
@@ -231,7 +225,12 @@ export const AccountTab = ({ data }: Profile) => {
         }}
       >
         Lưu thay đổi
-      </div>
+      </div>{" "}
+      {loading && (
+        <div className="loading">
+          <Loading />
+        </div>
+      )}
     </>
   );
 };

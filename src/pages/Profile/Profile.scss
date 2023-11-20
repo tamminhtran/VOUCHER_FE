@@ -11,6 +11,13 @@
   align-items: flex-start;
   gap: 22px;
   padding: 25px 0px;
+  .loading {
+    .lds-ellipsis {
+      div {
+        background-color: #2579f2;
+      }
+    }
+  }
   .left {
     width: 20%;
     border-radius: 5.25px;

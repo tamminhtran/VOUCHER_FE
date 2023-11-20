@@ -10,8 +10,8 @@ interface IAuthState {
 
 // Define the initial state using that type
 const initialState: IAuthState = {
-  accessToken: "",
-  refreshToken: "",
+  accessToken: null,
+  refreshToken: null,
 };
 
 export const authSlice = createSlice({
@@ -21,6 +21,7 @@ export const authSlice = createSlice({
     logIn: (state, action: PayloadAction<IAuthState>) => {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      localStorage.setItem("token", action.payload.accessToken);
     },
     logOut: (state) => {
       state.accessToken = null;

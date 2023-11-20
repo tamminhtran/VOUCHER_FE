@@ -3,6 +3,16 @@
   flex-direction: column;
   background: transparent;
   gap: 10px;
+  transition: all 0.3s;
+  border-radius: 5.25px;
+  padding: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
   .top {
     width: 100%;
     max-width: 284px;

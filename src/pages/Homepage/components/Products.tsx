@@ -2,44 +2,59 @@ import { Wrapper } from "components/Wrapper/Wrapper";
 import React from "react";
 import { Card, ICardProps } from "./Card";
 import "./Products.scss";
+import { useNavigate } from "react-router-dom";
 export interface IProductsProps {
   title?: String;
   label?: String;
   subtitle?: String;
+  id: any;
   data: any;
 }
-export const Products = ({ title, label, subtitle, data }: IProductsProps) => {
+export const Products = ({
+  title,
+  label,
+  subtitle,
+  data,
+  id,
+}: IProductsProps) => {
+  const [isExpand, setIsExpand] = React.useState(false);
+  console.log(data);
   return (
     <Wrapper>
       <div className="title">
         {title} {label && <div className="label">{label}</div>}
       </div>
       {subtitle && <div className="subtitle">{subtitle} </div>}
-      <div className="lst">
-        {data
-          ? data.map((item: ICardProps, key: any) => {
-              return (
-                <Card
-                  name={item.name}
-                  price={item.price}
-                  discount={item.discount}
-                  discountPercent={item.discountPercent}
-                  img={item.img}
-                  isSoldout={false}
-                  key={key}
-                />
-              );
-            })
-          : "no data"}
-      </div>
-      <div
-        className="more"
-        onClick={() => {
-          const ele = document.querySelector(".lst");
-        }}
-      >
-        Xem thêm
-      </div>
+      {data && data.length > 0 ? (
+        <div className={isExpand ? "lst expand" : "lst"}>
+          {data.map((item: any, key: any) => {
+            return (
+              <Card
+                name={item.name}
+                price={item.price}
+                discountAmount={item.discountAmount}
+                img={item.bannerUrl}
+                isSoldout={item.status === 1 ? false : true}
+                key={key}
+                id={item.id}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        "no data"
+      )}
+      {data && data.length > 8 && (
+        <div
+          className="more"
+          onClick={() => {
+            // const ele = document.querySelector(".lst");
+            setIsExpand(!isExpand);
+          }}
+        >
+          {isExpand ? "Thu gọn" : " Xem thêm"}
+        </div>
+      )}
       <div className="line"></div>
     </Wrapper>
   );

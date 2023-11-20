@@ -4,38 +4,43 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-export const AccountTab = () => {
+interface Profile {
+  data: any;
+}
+export const AccountTab = ({ data }: Profile) => {
   return (
     <>
       <div className="title">Tổng quan</div>
       <div className="stats">
         <div className="stat">
           <div className="label">Tên đăng nhập</div>
-          <div className="val">tamminhtran</div>
+          <div className="val">{data.userName}</div>
         </div>{" "}
         <div className="stat">
           <div className="label">Email</div>
-          <div className="val">tmt270594@gmail.com</div>
+          <div className="val">{data.email}</div>
         </div>{" "}
         <div className="stat">
           <div className="label">Họ và tên</div>
-          <div className="val">Tran Minh Tam</div>
+          <div className="val">
+            {data.lastName} {data.firstName}
+          </div>
         </div>{" "}
         <div className="stat">
           <div className="label">Nhóm khách hàng</div>
-          <div className="val">Member</div>
+          <div className="val">...</div>
         </div>{" "}
         <div className="stat">
           <div className="label">Số dư</div>
-          <div className="val">0đ</div>
+          <div className="val">...</div>
         </div>{" "}
         <div className="stat">
           <div className="label">Đã tích lũy</div>
-          <div className="val">0đ</div>
+          <div className="val">...</div>
         </div>{" "}
         <div className="stat">
           <div className="label">Ngày tham gia</div>
-          <div className="val">2023-10-10 22:38:33</div>
+          <div className="val">....</div>
         </div>{" "}
       </div>
       <div className="line"></div>

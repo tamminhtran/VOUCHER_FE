@@ -3,6 +3,13 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 12px;
   row-gap: 42px;
+  padding: 22px 0px;
+  overflow: hidden;
+  transition: all 0.3s;
+  min-height: 280px;
+  &.expand {
+    height: fit-content;
+  }
 }
 .title {
   color: #000;
@@ -51,6 +58,10 @@
   line-height: 21px; /* 150% */
   cursor: pointer;
   margin: 35px 0px 15px 0px;
+  transition: all 0.3s;
+  &:hover {
+    color: goldenrod;
+  }
 }
 .line {
   border-bottom: 1px solid rgba(156, 163, 175, 0.25);

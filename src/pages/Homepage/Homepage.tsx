@@ -7,21 +7,57 @@ import { Edus, Entertains, Games } from "./Homepage.hard";
 import { Wrapper } from "components/Wrapper/Wrapper";
 import "./Homepage.scss";
 import { toast } from "react-toastify";
+import { getWarehouseByLabel } from "queries/warehouse";
+import { getAllWarehouse } from "queries/warehouse";
+import { useSelector } from "react-redux";
+import { selectAccessToken } from "redux/features/auth/authSlice";
+import { getLabel } from "queries/label";
 export const Homepage = () => {
+  const token = useSelector(selectAccessToken);
+  const [labels, setLabels] = React.useState([]);
+  const [allWarehouse, setAllWarehouse] = React.useState([]);
+  React.useEffect(() => {
+    if (token) {
+      console.log(token);
+      getAllWarehouse()
+        .then((rs: any) => {
+          if (rs) {
+            setAllWarehouse(rs.data);
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err.message);
+        });
+      getLabel()
+        .then((rs: any) => {
+          if (rs) {
+            setLabels(rs.data);
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err.message);
+        });
+    }
+  }, [token]);
+  console.log(labels);
+  console.log(allWarehouse);
   return (
     <div className="homepage">
       <Overview />
       <Brand title="Thương hiệu nổi bật" isNew={false} />
       <Brand title="Thương hiệu mới" isNew={true} />
       <Category />
-      <Products
-        title="Game trên Steam"
-        label="Khám phá"
-        subtitle="Những trò chơi được đánh giá tốt, nội dung hấp dẫn thu hút đang chờ bạn"
-        data={Games}
-      />
-      <Products title={"Học tập"} data={Edus} />
-      <Products title={"Giải trí"} data={Entertains} />
+      {labels &&
+        labels.map((lb, key) => {
+          return (
+            <Products
+              title={lb.name}
+              data={allWarehouse.filter((item) => item.labelName === lb.name)}
+              id={lb.id}
+              key={key}
+            />
+          );
+        })}
       <Wrapper>
         <div className="faqs-wrapper">
           <div className="faqs">

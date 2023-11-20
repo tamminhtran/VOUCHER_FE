@@ -34,3 +34,6 @@ export const forgotPassword = (email: String) => {
 export const setPassword = (obj: any) => {
   return http.put(`/account/api/set_password`, obj);
 };
+export const getUserInfo = () => {
+  return http.get(`/user/api/infor`);
+};

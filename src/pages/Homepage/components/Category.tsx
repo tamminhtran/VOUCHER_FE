@@ -9,6 +9,7 @@ import Cate3 from "assets/homepage/cate3.png";
 import Cate4 from "assets/homepage/cate4.png";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { getAllCategory } from "queries/category";
 export interface IDivContainerProps {}
 
 export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
@@ -21,6 +22,15 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
     autoplay: true,
     autoplaySpeed: 1000,
   };
+  const [categories, setCategories] = React.useState([]);
+  React.useEffect(() => {
+    getAllCategory().then((rs: any) => {
+      if (rs) {
+        setCategories(rs.data);
+      }
+    });
+  }, []);
+
   return (
     <Wrapper>
       <div className="category">
@@ -32,21 +42,18 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
           <KeyboardArrowRightIcon className="ic" />
         </div>
         <Slider {...settings}>
-          <div className="card">
-            <img src={Cate1} alt="" className="bg" />
-          </div>{" "}
-          <div className="card">
-            <img src={Cate2} alt="" className="bg" />
-          </div>{" "}
-          <div className="card">
-            <img src={Cate3} alt="" className="bg" />
-          </div>{" "}
-          <div className="card">
-            <img src={Cate4} alt="" className="bg" />
-          </div>
-          <div className="card">
-            <img src={Cate4} alt="" className="bg" />
-          </div>
+          {categories
+            ? categories.map((cat: any, key) => {
+                return (
+                  <div className="card" key={key}>
+                    <div className="bg">
+                      <img src={cat.bannerUrl} alt="" />
+                    </div>
+                    <span>{cat.name}</span>
+                  </div>
+                );
+              })
+            : null}
         </Slider>
       </div>
     </Wrapper>

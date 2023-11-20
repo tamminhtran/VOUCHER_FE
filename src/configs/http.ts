@@ -6,7 +6,7 @@ const http = axios.create({
 });
 http.interceptors.request.use(
   function (config) {
-    let token = "";
+    let token = localStorage.getItem("token") || "";
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -18,7 +18,10 @@ http.interceptors.request.use(
 // Add a response interceptor
 http.interceptors.response.use(
   function (response) {
-    return response.data;
+    if (response.data) {
+      return response.data;
+    }
+    return response;
   },
   function (error) {
     toast.error(error.response.data.error);

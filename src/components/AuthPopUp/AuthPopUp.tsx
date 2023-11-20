@@ -95,12 +95,12 @@ export const AuthPopUp = ({
   };
   const onForGotPassword = async (data: any) => {
     setLoading(true);
-    forgotPassword(data.email)
+    forgotPassword(data.emailForgot)
       .then((rs: any) => {
         if (rs) {
           setLoading(false);
           toast.success(rs.message);
-          setValidEmail(data.email);
+          setValidEmail(data.emailForgot);
         }
       })
       .catch((er: any) => {
@@ -109,24 +109,24 @@ export const AuthPopUp = ({
       });
   };
   const onSetPassword = async (data: any) => {
-    console.log(data);
+    setLoading(true);
     let obj = {
       email: validEmail,
       newPassword: data.newpass,
     };
-    console.log(obj);
     setPassword(obj)
       .then((rs: any) => {
         if (rs) {
+          setLoading(false);
           toast.success(rs.message);
           setIsForgotPassword(false);
         }
       })
       .catch((er: any) => {
         toast.error("Something went wrong");
+        setLoading(false);
       });
   };
-  console.log("loading", loading);
   return (
     <div className="auth-pop-up">
       <div className="bg" onClick={() => setVisibility(false)}></div>
@@ -159,6 +159,9 @@ export const AuthPopUp = ({
         ) : (
           <div className="content">
             <form onSubmit={handleSubmit4(onSetPassword)}>
+              <div>
+                <input defaultValue={""} id="hide" />
+              </div>
               <div>
                 <label>Enter valid new password</label>
                 <input {...register4("newpass")} />

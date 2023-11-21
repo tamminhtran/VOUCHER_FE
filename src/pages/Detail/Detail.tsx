@@ -69,7 +69,7 @@ export const Detail = () => {
                 discountType: "fdsfs",
                 discountAmount: rs.data.idWarehouseDTO.discountAmount,
                 idUserDTO: { id: rs.data.idUserDTO.id },
-                idStoreDTO: 401,
+                idStoreDTO: { id: 401 },
               },
               email: rs.data.idUserDTO.email,
               numberOfSerial: 1,
@@ -159,16 +159,6 @@ export const Detail = () => {
 };
 
 const PopUpBuyTicket = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<any>({
-    resolver: yupResolver(schemaBuyTicket),
-  });
-  const onSubmitt = (data: any) => {
-    console.log(data);
-  };
   return (
     <div className="pop-up-buy-ticket">
       <div className="bg"></div>

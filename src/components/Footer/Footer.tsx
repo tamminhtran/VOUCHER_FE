@@ -27,7 +27,7 @@ export const Footer = ({ ...props }) => {
                         <div className="hotline">Hotline </div>
                       </div>
                       <div className="p-mb-0">
-                        <div className="_1900-6959">1900 6959 </div>
+                        <div className="_1900-6959">1900 0099 </div>
                       </div>
                     </div>
                   </div>
@@ -52,7 +52,7 @@ export const Footer = ({ ...props }) => {
                         <div className="email-h-tr">Email Hỗ Trợ </div>
                       </div>
                       <div className="p-mb-0">
-                        <div className="cskh-vinid-net">cskh@vinid.net </div>
+                        <div className="cskh-vinid-net">cybersoftprojectvoucher@gmail.com </div>
                       </div>
                     </div>
                   </div>
@@ -77,8 +77,8 @@ export const Footer = ({ ...props }) => {
                         <div className="fanpage">Fanpage </div>
                       </div>
                       <div className="p-mb-0">
-                        <div className="fb-com-vinid-net">
-                          fb.com/vinid.net{" "}
+                        <div className="fb-com-smart-voucher">
+                          fb.com/smart-voucher{" "}
                         </div>
                       </div>
                     </div>
@@ -98,23 +98,23 @@ export const Footer = ({ ...props }) => {
                 <div className="small-t-n-c-ng-ty">Tên công ty </div>
                 <div className="p-h-2-d-2824-eae-5">
                   <div className="c-ng-ty-c-ph-n-one-mount-consumer">
-                    CÔNG TY CỔ PHẦN ONE MOUNT
+                    CÔNG TY CỔ PHẦN SMART
                     <br />
-                    CONSUMER{" "}
+                    VOUCHER{" "}
                   </div>
                 </div>
                 <div className="small-a-ch">Địa chỉ </div>
                 <div className="p-h-2-d-312531-fc">
                   <div className="t-ng-4-t-a-v-n-ph-ng-t-26-k-t-times-city-458-minh-khai-ph-ng-v-nh-tuy-qu-n-hai-b-tr-ng-th-nh-ph-h-n-i-vi-t-nam">
-                    Tầng 4, Tòa văn phòng T26, KĐT
+                    Tầng 81, Tòa nhà Landmark 81
                     <br />
-                    Times City, 458 Minh Khai,
+                    720A đường Điện Biên Phủ,
                     <br />
-                    Phường Vĩnh Tuy, Quận Hai Bà
+                    Phường 22, Quận Bình
                     <br />
-                    Trưng,Thành phố Hà Nội, Việt
+                    Thạnh,Thành phố Hồ Chí Minh,
                     <br />
-                    Nam{" "}
+                    Việt Nam{" "}
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export const Footer = ({ ...props }) => {
                   <div className="item">
                     <div className="small-hotline-khtt">Hotline KHTT </div>
                     <div className="col-item-value2">
-                      <div className="_1900-69592">1900 6959 </div>
+                      <div className="_1900-69592">1900 0099 </div>
                     </div>
                   </div>
                   <div className="item2"></div>

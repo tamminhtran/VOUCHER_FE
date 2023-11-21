@@ -66,7 +66,7 @@ export const Detail = () => {
                 idCategoryDTO: { id: rs.data.idWarehouseDTO.idCategory },
                 idOrderDTO: { id: rs.data.id },
                 status: 1,
-                discountType: "fdsfs",
+                discountType: "Percentage Off",
                 discountAmount: rs.data.idWarehouseDTO.discountAmount,
                 idUserDTO: { id: rs.data.idUserDTO.id },
                 idStoreDTO: { id: 401 },

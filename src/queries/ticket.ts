@@ -22,7 +22,7 @@ export interface IBuyTicket {
 }
 export const buyTicket = (payload: IBuyTicket) => {
   return http.post(
-    `/ticket/api/buy-ticket?email=${payload.email}&numberOfSerial=${payload.numberOfSerial}`,
+    `/ticket/api/buy-ticket?userEmail=${payload.email}&numberOfSerial=${payload.numberOfSerial}`,
     payload.obj
   );
 };

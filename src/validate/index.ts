@@ -52,6 +52,12 @@ export const schemaForgotPassword = yup
   })
   .required();
 
+export const schemaBuyTicket = yup
+  .object()
+  .shape({
+    amount: yup.number().min(1).max(3).required(),
+  })
+  .required();
 export const schemaSetPassword = yup
   .object()
   .shape({

@@ -10,6 +10,11 @@ import { IBodyBuyTicket } from "queries/ticket";
 import { addOrderAsync } from "queries/order";
 import { IOrder } from "queries/order";
 import { getUserInfo } from "queries/auth";
+import { IBuyTicket } from "queries/ticket";
+import { buyTicket } from "queries/ticket";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaBuyTicket } from "validate";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
@@ -42,18 +47,43 @@ export const Detail = () => {
   const addOrder = () => {
     let obj: IOrder = {
       status: 1,
-      idUserDTO: userData.id,
+      idUserDTO: {
+        id: userData.id,
+      },
       quantity: 2,
-      idWarehouseDTO: data.id,
+      idWarehouseDTO: { id: data.id },
     };
     return addOrderAsync(obj);
   };
-  const buyTicket = () => {
+  const handelBuyTicket = () => {
     if (data && userData) {
       addOrder()
         .then((rs: any) => {
           if (rs) {
-            console.log(rs);
+            let payload: IBuyTicket = {
+              obj: {
+                idWarehouseDTO: { id: rs.data.idWarehouseDTO.id },
+                idCategoryDTO: { id: rs.data.idWarehouseDTO.idCategory },
+                idOrderDTO: { id: rs.data.id },
+                status: 1,
+                discountType: "fdsfs",
+                discountAmount: rs.data.idWarehouseDTO.discountAmount,
+                idUserDTO: { id: rs.data.idUserDTO.id },
+                idStoreDTO: 401,
+              },
+              email: rs.data.idUserDTO.email,
+              numberOfSerial: 1,
+            };
+            buyTicket(payload)
+              .then((rs: any) => {
+                if (rs) {
+                  console.log(rs);
+                  toast.success(rs.message);
+                }
+              })
+              .catch((err: any) => {
+                toast.error(err.message);
+              });
           }
         })
         .catch((err: any) => {
@@ -63,7 +93,6 @@ export const Detail = () => {
       toast.error("Something went wrong");
     }
   };
-  buyTicket();
   return (
     <div className="detail">
       {data ? (
@@ -118,13 +147,40 @@ export const Detail = () => {
             </p>
             <p>Đổi điểm VinID nhận ưu đãi ngay!</p>
           </div>
-          <div className="btnBuy" onClick={() => buyTicket()}>
+          <div className="btnBuy" onClick={() => handelBuyTicket()}>
             MUA NGAY
           </div>
         </Wrapper>
       ) : (
         "No data"
       )}
+    </div>
+  );
+};
+
+const PopUpBuyTicket = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>({
+    resolver: yupResolver(schemaBuyTicket),
+  });
+  const onSubmitt = (data: any) => {
+    console.log(data);
+  };
+  return (
+    <div className="pop-up-buy-ticket">
+      <div className="bg"></div>
+      <div className="content">
+        <form onSubmit={handleSubmit(onSubmitt)}>
+          <div>
+            <div className="label">Enter amount want to buy :</div>
+            <input type="number" min={1} max={3} {...register("amount")} />
+            <p>{errors.amount && errors.amount.message.toString()}</p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

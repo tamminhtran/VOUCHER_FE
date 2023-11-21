@@ -1,13 +1,19 @@
 import http from "configs/http";
 export interface IBodyBuyTicket {
-  idWarehouseDTO: Number;
-  idCategoryDTO: Number;
-  idOrderDTO: Number;
+  idWarehouseDTO: {
+    id: Number;
+  };
+  idCategoryDTO: { id: Number };
+  idOrderDTO: { id: Number };
   status: Number;
   discountType: String;
   discountAmount: Number;
-  idStoreDTO: Number;
-  idUserDTO: Number;
+  idStoreDTO: {
+    id: Number;
+  };
+  idUserDTO: {
+    id: Number;
+  };
 }
 export interface IBuyTicket {
   obj: IBodyBuyTicket;
@@ -15,5 +21,8 @@ export interface IBuyTicket {
   numberOfSerial: Number;
 }
 export const buyTicket = (payload: IBuyTicket) => {
-  return http.get(`/ticket/api/buy-ticket/`);
+  return http.post(
+    `/ticket/api/buy-ticket?email=${payload.email}&numberOfSerial=${payload.numberOfSerial}`,
+    payload.obj
+  );
 };

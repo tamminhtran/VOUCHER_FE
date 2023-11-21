@@ -37,3 +37,7 @@ export const setPassword = (obj: any) => {
 export const getUserInfo = () => {
   return http.get(`/user/api/infor`);
 };
+
+export const getUserGoogleInfo = () => {
+  return http.get(`/user/api/auth2/infor`);
+};

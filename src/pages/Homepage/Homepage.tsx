@@ -7,36 +7,30 @@ import { Wrapper } from "components/Wrapper/Wrapper";
 import "./Homepage.scss";
 import { toast } from "react-toastify";
 import { getAllWarehouse } from "queries/warehouse";
-import { useSelector } from "react-redux";
-import { selectAccessToken } from "redux/features/auth/authSlice";
 import { getLabel } from "queries/label";
 export const Homepage = () => {
-  const token = useSelector(selectAccessToken);
   const [labels, setLabels] = React.useState([]);
   const [allWarehouse, setAllWarehouse] = React.useState([]);
   React.useEffect(() => {
-    if (token) {
-      console.log(token);
-      getAllWarehouse()
-        .then((rs: any) => {
-          if (rs) {
-            setAllWarehouse(rs.data);
-          }
-        })
-        .catch((err: any) => {
-          toast.error(err.message);
-        });
-      getLabel()
-        .then((rs: any) => {
-          if (rs) {
-            setLabels(rs.data);
-          }
-        })
-        .catch((err: any) => {
-          toast.error(err.message);
-        });
-    }
-  }, [token]);
+    getAllWarehouse()
+      .then((rs: any) => {
+        if (rs) {
+          setAllWarehouse(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
+    getLabel()
+      .then((rs: any) => {
+        if (rs) {
+          setLabels(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
+  }, []);
   console.log(labels);
   console.log(allWarehouse);
   return (

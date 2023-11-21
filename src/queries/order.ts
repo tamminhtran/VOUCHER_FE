@@ -1,4 +1,10 @@
 import http from "configs/http";
-export const addOrder = () => {
-  return http.get();
+export interface IOrder {
+  status: Number;
+  idUserDTO: Number;
+  quantity: Number;
+  idWarehouseDTO: Number;
+}
+export const addOrderAsync = (obj: IOrder) => {
+  return http.post("/order/api/add-order", obj);
 };

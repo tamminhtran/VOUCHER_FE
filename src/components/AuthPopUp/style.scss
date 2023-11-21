@@ -1,3 +1,11 @@
+@keyframes anim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .auth-pop-up {
   width: 100vw;
   height: 100vh;
@@ -8,6 +16,7 @@
   z-index: 10;
   top: 0;
   left: 0;
+  animation: anim 0.3s forwards;
   .bg {
     background: rgba(0, 0, 0, 0.75);
     position: absolute;
@@ -19,7 +28,7 @@
   }
   .content {
     max-width: 70%;
-    max-height: 70%;
+    height: 70%;
     overflow: scroll;
     &::-webkit-scrollbar {
       display: none;

@@ -6,9 +6,25 @@ import { toast } from "react-toastify";
 import { getWarehouseDetail } from "queries/warehouse";
 import moment from "moment";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { IBodyBuyTicket } from "queries/ticket";
+import { addOrderAsync } from "queries/order";
+import { IOrder } from "queries/order";
+import { getUserInfo } from "queries/auth";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
+  const [userData, setUserData] = React.useState<any>();
+  React.useEffect(() => {
+    getUserInfo()
+      .then((rs: any) => {
+        if (rs) {
+          setUserData(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
+  }, []);
   React.useEffect(() => {
     getWarehouseDetail(id)
       .then((rs: any) => {
@@ -20,8 +36,34 @@ export const Detail = () => {
         toast.error(err.message);
       });
   }, [id]);
+
   console.log(data);
   const navigate = useNavigate();
+  const addOrder = () => {
+    let obj: IOrder = {
+      status: 1,
+      idUserDTO: userData.id,
+      quantity: 2,
+      idWarehouseDTO: data.id,
+    };
+    return addOrderAsync(obj);
+  };
+  const buyTicket = () => {
+    if (data && userData) {
+      addOrder()
+        .then((rs: any) => {
+          if (rs) {
+            console.log(rs);
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err.message);
+        });
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
+  buyTicket();
   return (
     <div className="detail">
       {data ? (
@@ -76,7 +118,9 @@ export const Detail = () => {
             </p>
             <p>Đổi điểm VinID nhận ưu đãi ngay!</p>
           </div>
-          <div className="btnBuy">MUA NGAY</div>
+          <div className="btnBuy" onClick={() => buyTicket()}>
+            MUA NGAY
+          </div>
         </Wrapper>
       ) : (
         "No data"

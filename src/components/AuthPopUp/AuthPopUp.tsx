@@ -16,6 +16,7 @@ import { schemaForgotPassword } from "validate";
 import { schemaSetPassword } from "validate";
 import { setPassword } from "queries/auth";
 import { Link } from "react-router-dom";
+import { getUserGoogleInfo } from "queries/auth";
 
 export const AuthPopUp = ({
   setVisibility,
@@ -128,6 +129,13 @@ export const AuthPopUp = ({
         setLoading(false);
       });
   };
+  React.useEffect(() => {
+    // getUserGoogleInfo()
+    //   .then((rs: any) => {
+    //     console.log(rs);
+    //   })
+    //   .catch((err: any) => toast.error(err.message));
+  });
   return (
     <div className="auth-pop-up">
       <div className="bg" onClick={() => setVisibility(false)}></div>

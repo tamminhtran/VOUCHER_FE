@@ -10,5 +10,9 @@ export interface IOrder {
   };
 }
 export const addOrderAsync = (obj: IOrder) => {
-  return http.post("/order/api/insert", obj);
+  return http.post("/order/api/add-order", obj);
+};
+
+export const getOrderByUser = () => {
+  return http.get("/order/api/list-order");
 };

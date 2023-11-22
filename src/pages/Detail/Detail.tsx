@@ -15,11 +15,16 @@ import { buyTicket } from "queries/ticket";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaBuyTicket } from "validate";
+import { getAllWarehouseStore } from "queries/warehouse-store";
+import { Loading } from "components/Loading/Loading";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
+  const [idStore, setIdStore] = React.useState<any>();
   const [userData, setUserData] = React.useState<any>();
   const [isShowPopUp, setIsShowPopUp] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -49,23 +54,50 @@ export const Detail = () => {
         toast.error(err.message);
       });
   }, [id]);
+  React.useEffect(() => {
+    if (data) {
+      getAllWarehouseStore()
+        .then((rs: any) => {
+          if (rs) {
+            setIdStore(
+              rs.data.find((item: any) => item.idWarehouse === data.id).idStore
+            );
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err.message);
+        });
+    }
+  }, [data]);
 
-  console.log(data);
-  const navigate = useNavigate();
+  console.log(idStore);
   const addOrder = (amount: Number) => {
+    // let obj: IOrder = {
+    //   status: 1,
+    //   idUser: userData.id,
+    //   quantity: amount,
+    //   idWarehouse: data.id,
+    //   idStore: idStore ? idStore : null,
+    // };
     let obj: IOrder = {
       status: 1,
-      idUser: userData.id,
+      idUserDTO: { id: userData.id },
       quantity: amount,
-      idWarehouse: data.id,
+      idWarehouseDTO: { id: data.id },
+      //   idStore: idStore ? idStore : null,
     };
     return addOrderAsync(obj);
   };
   const handelBuyTicket = (dt: any) => {
     if (data && userData) {
+      setLoading(true);
       addOrder(dt.amount)
         .then((rs: any) => {
           if (rs) {
+            if (!idStore) {
+              toast.error("Something went wrong");
+              return;
+            }
             let payload: IBuyTicket = {
               obj: {
                 idWarehouseDTO: { id: rs.data.idWarehouseDTO.id },
@@ -75,7 +107,7 @@ export const Detail = () => {
                 discountType: rs.data.discountName,
                 discountAmount: rs.data.idWarehouseDTO.discountAmount,
                 idUserDTO: { id: rs.data.idUserDTO.id },
-                idStoreDTO: { id: rs.data.idStore },
+                idStoreDTO: { id: idStore },
               },
               email: rs.data.idUserDTO.email,
               numberOfSerial: dt.amount,
@@ -83,17 +115,21 @@ export const Detail = () => {
             buyTicket(payload)
               .then((rs: any) => {
                 if (rs) {
-                  console.log(rs);
+                  setLoading(false);
+                  setIsShowPopUp(false);
                   toast.success(rs.message);
+                  navigate("/profile");
                 }
               })
               .catch((err: any) => {
                 toast.error(err.message);
+                setLoading(false);
               });
           }
         })
         .catch((err: any) => {
           toast.error(err.message);
+          setLoading(false);
         });
     } else {
       toast.error("Something went wrong");
@@ -181,6 +217,12 @@ export const Detail = () => {
                   <div className="cancel" onClick={() => setIsShowPopUp(false)}>
                     Cancel
                   </div>
+                  {loading && (
+                    <div className="loading">
+                      <Loading />
+                      <p>Purchasing ...</p>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>

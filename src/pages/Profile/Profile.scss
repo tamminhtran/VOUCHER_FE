@@ -182,6 +182,14 @@
         line-height: 21px; /* 150% */
       }
     }
+    .table {
+      .active {
+        color: rgb(68, 221, 68);
+      }
+      .deactive {
+        color: red;
+      }
+    }
     .allow {
       display: flex;
       max-width: 336px;

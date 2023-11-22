@@ -168,6 +168,23 @@
       justify-content: center;
       position: relative;
       z-index: 1;
+      .loading {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        .lds-ellipsis {
+          height: 60px;
+          div {
+            background-color: #2579f2;
+          }
+        }
+        p {
+          font-size: 13px;
+          color: green;
+        }
+      }
       input[type="submit"] {
         border-radius: 5.25px;
         background: #2579f2;

@@ -51,7 +51,7 @@ export const Header = () => {
         <div className="header-content">
           <div className="logo-wrapper" onClick={() => navigate("/")}>
             <img src={Logo} alt="" />
-            <div className="logo">Super Voucher</div>
+            <div className="logo">Smart Voucher</div>
           </div>
           <div className="search-wrapper">
             <input

@@ -17,7 +17,7 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 1000,
   };
   const [categories, setCategories] = React.useState([]);

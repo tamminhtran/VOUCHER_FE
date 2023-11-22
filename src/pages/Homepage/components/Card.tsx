@@ -12,6 +12,8 @@ export interface ICardProps {
 }
 export const Card = (props: ICardProps) => {
   const navigate = useNavigate();
+  console.log(props);
+  let id = props.img && props.img.slice(32, props.img.length - 18);
   return (
     <div
       className="card"
@@ -20,7 +22,7 @@ export const Card = (props: ICardProps) => {
       }}
     >
       <div className="top">
-        <img src={props.img} alt="" />
+        <img src={`https://drive.google.com/uc?export=view&id=${id}`} alt="" />
         {props.isSoldout && <div className="soldout">Hết hàng</div>}
       </div>
       <div className="bottom">

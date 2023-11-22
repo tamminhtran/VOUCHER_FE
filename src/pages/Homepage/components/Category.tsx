@@ -3,13 +3,11 @@ import React from "react";
 import "./Category.css";
 import { Wrapper } from "components/Wrapper/Wrapper";
 import Slider from "react-slick";
-import Cate1 from "assets/homepage/cate1.png";
-import Cate2 from "assets/homepage/cate2.png";
-import Cate3 from "assets/homepage/cate3.png";
-import Cate4 from "assets/homepage/cate4.png";
+
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { getAllCategory } from "queries/category";
+import { toast } from "react-toastify";
 export interface IDivContainerProps {}
 
 export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
@@ -24,12 +22,15 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
   };
   const [categories, setCategories] = React.useState([]);
   React.useEffect(() => {
-    getAllCategory().then((rs: any) => {
-      if (rs) {
-        setCategories(rs.data);
-      }
-    });
+    getAllCategory()
+      .then((rs: any) => {
+        if (rs) {
+          setCategories(rs.data);
+        }
+      })
+      .catch((err: any) => toast.error(err.message));
   }, []);
+  console.log("categories", categories);
 
   return (
     <Wrapper>
@@ -44,12 +45,16 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
         <Slider {...settings}>
           {categories
             ? categories.map((cat: any, key) => {
+                let id = cat.bannerUrl.slice(32, cat.bannerUrl.length - 18);
                 return (
-                  <div className="card" key={key}>
+                  <div className="card-cate" key={key}>
                     <div className="bg">
-                      <img src={cat.bannerUrl} alt="" />
+                      <img
+                        src={`https://drive.google.com/uc?export=view&id=${id}`}
+                        alt=""
+                      />
                     </div>
-                    <span>{cat.name}</span>
+                    <span className="txt">{cat.name}</span>
                   </div>
                 );
               })

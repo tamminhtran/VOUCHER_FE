@@ -6,15 +6,15 @@ import { toast } from "react-toastify";
 import { getWarehouseDetail } from "queries/warehouse";
 import moment from "moment";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { IBodyBuyTicket } from "queries/ticket";
+// import { IBodyBuyTicket } from "queries/ticket";
 import { addOrderAsync } from "queries/order";
 import { IOrder } from "queries/order";
 import { getUserInfo } from "queries/auth";
 import { IBuyTicket } from "queries/ticket";
 import { buyTicket } from "queries/ticket";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schemaBuyTicket } from "validate";
+// import { useForm } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import { schemaBuyTicket } from "validate";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
@@ -66,10 +66,10 @@ export const Detail = () => {
                 idCategoryDTO: { id: rs.data.idWarehouseDTO.idCategory },
                 idOrderDTO: { id: rs.data.id },
                 status: 1,
-                discountType: "Percentage Off",
+                discountType: rs.data.discountName,
                 discountAmount: rs.data.idWarehouseDTO.discountAmount,
                 idUserDTO: { id: rs.data.idUserDTO.id },
-                idStoreDTO: { id: 401 },
+                idStoreDTO: { id: rs.data.idStore },
               },
               email: rs.data.idUserDTO.email,
               numberOfSerial: 1,
@@ -158,19 +158,19 @@ export const Detail = () => {
   );
 };
 
-const PopUpBuyTicket = () => {
-  return (
-    <div className="pop-up-buy-ticket">
-      <div className="bg"></div>
-      <div className="content">
-        <form onSubmit={handleSubmit(onSubmitt)}>
-          <div>
-            <div className="label">Enter amount want to buy :</div>
-            <input type="number" min={1} max={3} {...register("amount")} />
-            <p>{errors.amount && errors.amount.message.toString()}</p>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
+// const PopUpBuyTicket = () => {
+//   return (
+//     <div className="pop-up-buy-ticket">
+//       <div className="bg"></div>
+//       <div className="content">
+//         <form onSubmit={handleSubmit(onSubmitt)}>
+//           <div>
+//             <div className="label">Enter amount want to buy :</div>
+//             <input type="number" min={1} max={3} {...register("amount")} />
+//             <p>{errors.amount && errors.amount.message.toString()}</p>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };

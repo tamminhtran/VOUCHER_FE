@@ -16,7 +16,7 @@ import { schemaForgotPassword } from "validate";
 import { schemaSetPassword } from "validate";
 import { setPassword } from "queries/auth";
 import { Link } from "react-router-dom";
-import { getUserGoogleInfo } from "queries/auth";
+// import { getUserGoogleInfo } from "queries/auth";
 
 export const AuthPopUp = ({
   setVisibility,

@@ -32,6 +32,8 @@ export const Header = () => {
           }
         })
         .catch((err: any) => toast.error(err.message));
+  }, [token]);
+  React.useEffect(() => {
     getAllWarehouse()
       .then((rs: any) => {
         if (rs) {
@@ -41,7 +43,7 @@ export const Header = () => {
       .catch((err: any) => {
         toast.error(err.message);
       });
-  }, [token]);
+  }, []);
   return (
     <div className="header-container">
       <Wrapper>

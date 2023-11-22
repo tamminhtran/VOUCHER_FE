@@ -110,7 +110,14 @@ export const Header = () => {
                 <div>Hello {info.fullName || "..."}</div>
                 <div className="avatar">
                   {info.avatarUrl ? (
-                    <img src={info.avatarUrl} alt="" />
+                    <img
+                      src={`https://drive.google.com/uc?export=view&id=${info.avatarUrl.slice(
+                        32,
+                        info.avatarUrl.length - 20
+                      )}`}
+                      alt=""
+                      className="imagee"
+                    />
                   ) : (
                     <AccountCircleIcon className="ic" />
                   )}

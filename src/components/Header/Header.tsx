@@ -24,7 +24,8 @@ export const Header = () => {
   const [allWarehouse, setAllWarehouse] = React.useState([]);
   const navigate = useNavigate();
   React.useEffect(() => {
-    if (token)
+    if (token) {
+      console.log("fsdf");
       getUserInfo()
         .then((rs: any) => {
           if (rs) {
@@ -32,6 +33,7 @@ export const Header = () => {
           }
         })
         .catch((err: any) => toast.error(err.message));
+    }
   }, [token]);
   React.useEffect(() => {
     getAllWarehouse()
@@ -113,10 +115,9 @@ export const Header = () => {
                     <img
                       src={`https://drive.google.com/uc?export=view&id=${info.avatarUrl.slice(
                         32,
-                        info.avatarUrl.length - 20
+                        info.avatarUrl.length - 18
                       )}`}
                       alt=""
-                      className="imagee"
                     />
                   ) : (
                     <AccountCircleIcon className="ic" />

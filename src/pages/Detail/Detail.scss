@@ -65,7 +65,7 @@
     flex-direction: column;
     align-items: center;
     .banner {
-      width: 80%;
+      width: 100%;
       height: auto;
       img {
         width: 100%;
@@ -160,14 +160,16 @@
         rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
       background-color: white;
       border-radius: 8px;
-      padding: 24px;
+      padding: 48px;
       width: 30%;
-      height: 50vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       z-index: 1;
+      form {
+        width: 100%;
+      }
       .loading {
         width: 100%;
         display: flex;
@@ -187,12 +189,12 @@
       }
       input[type="submit"] {
         border-radius: 5.25px;
-        background: #2579f2;
+        // background: #2579f2;
+        color: black;
         display: flex;
         height: 42px;
         align-items: center;
         justify-content: center;
-        color: #fff;
         text-align: center;
         font-size: 14px;
         font-style: normal;

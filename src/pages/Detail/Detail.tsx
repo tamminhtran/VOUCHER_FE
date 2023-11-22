@@ -17,6 +17,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaBuyTicket } from "validate";
 import { getAllWarehouseStore } from "queries/warehouse-store";
 import { Loading } from "components/Loading/Loading";
+import { useSelector } from "react-redux";
+import { selectAccessToken } from "redux/features/auth/authSlice";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
@@ -25,6 +27,7 @@ export const Detail = () => {
   const [isShowPopUp, setIsShowPopUp] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const token = useSelector(selectAccessToken);
   const {
     register,
     handleSubmit,
@@ -33,16 +36,18 @@ export const Detail = () => {
     resolver: yupResolver(schemaBuyTicket),
   });
   React.useEffect(() => {
-    getUserInfo()
-      .then((rs: any) => {
-        if (rs) {
-          setUserData(rs.data);
-        }
-      })
-      .catch((err: any) => {
-        toast.error(err.message);
-      });
-  }, []);
+    if (token) {
+      getUserInfo()
+        .then((rs: any) => {
+          if (rs) {
+            setUserData(rs.data);
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err.message);
+        });
+    }
+  }, [token]);
   React.useEffect(() => {
     getWarehouseDetail(id)
       .then((rs: any) => {
@@ -132,7 +137,7 @@ export const Detail = () => {
           setLoading(false);
         });
     } else {
-      toast.error("Something went wrong");
+      toast.error("Please login for purchasing");
     }
   };
   return (
@@ -159,7 +164,14 @@ export const Detail = () => {
           <div className="content">
             <div className="banner">
               {data.bannerUrl !== null ? (
-                <img src={data.bannerUrl} alt="" />
+                <img
+                  src={`https://drive.google.com/uc?export=view&id=${data.bannerUrl.slice(
+                    32,
+                    data.bannerUrl.length - 18
+                  )}`}
+                  alt=""
+                  className="imagee"
+                />
               ) : (
                 <img src={require(`assets/detail/default.jpg`)} alt="" />
               )}
@@ -189,7 +201,16 @@ export const Detail = () => {
             </p>
             <p>Đổi điểm VinID nhận ưu đãi ngay!</p>
           </div>
-          <div className="btnBuy" onClick={() => setIsShowPopUp(true)}>
+          <div
+            className="btnBuy"
+            onClick={() => {
+              if (!token) {
+                toast.error("Please login for purchasing");
+                return;
+              }
+              setIsShowPopUp(true);
+            }}
+          >
             MUA NGAY
           </div>
           {isShowPopUp && (

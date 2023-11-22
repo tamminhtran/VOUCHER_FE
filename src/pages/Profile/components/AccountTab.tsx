@@ -69,10 +69,6 @@ export const AccountTab = ({ data }: Profile) => {
           <div className="label">Họ và tên</div>
           <div className="val">{data.fullName ? data.fullName : "..."}</div>
         </div>{" "}
-        <div className="stat">
-          <div className="label">Ngày tham gia</div>
-          <div className="val">....</div>
-        </div>{" "}
       </div>
       <div className="line"></div>
       <div className="avatar">

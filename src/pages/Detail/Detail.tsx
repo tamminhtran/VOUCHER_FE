@@ -12,13 +12,21 @@ import { IOrder } from "queries/order";
 import { getUserInfo } from "queries/auth";
 import { IBuyTicket } from "queries/ticket";
 import { buyTicket } from "queries/ticket";
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { schemaBuyTicket } from "validate";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaBuyTicket } from "validate";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
   const [userData, setUserData] = React.useState<any>();
+  const [isShowPopUp, setIsShowPopUp] = React.useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>({
+    resolver: yupResolver(schemaBuyTicket),
+  });
   React.useEffect(() => {
     getUserInfo()
       .then((rs: any) => {
@@ -44,20 +52,18 @@ export const Detail = () => {
 
   console.log(data);
   const navigate = useNavigate();
-  const addOrder = () => {
+  const addOrder = (amount: Number) => {
     let obj: IOrder = {
       status: 1,
-      idUserDTO: {
-        id: userData.id,
-      },
-      quantity: 2,
-      idWarehouseDTO: { id: data.id },
+      idUser: userData.id,
+      quantity: amount,
+      idWarehouse: data.id,
     };
     return addOrderAsync(obj);
   };
-  const handelBuyTicket = () => {
+  const handelBuyTicket = (dt: any) => {
     if (data && userData) {
-      addOrder()
+      addOrder(dt.amount)
         .then((rs: any) => {
           if (rs) {
             let payload: IBuyTicket = {
@@ -72,7 +78,7 @@ export const Detail = () => {
                 idStoreDTO: { id: rs.data.idStore },
               },
               email: rs.data.idUserDTO.email,
-              numberOfSerial: 1,
+              numberOfSerial: dt.amount,
             };
             buyTicket(payload)
               .then((rs: any) => {
@@ -147,9 +153,38 @@ export const Detail = () => {
             </p>
             <p>Đổi điểm VinID nhận ưu đãi ngay!</p>
           </div>
-          <div className="btnBuy" onClick={() => handelBuyTicket()}>
+          <div className="btnBuy" onClick={() => setIsShowPopUp(true)}>
             MUA NGAY
           </div>
+          {isShowPopUp && (
+            <div className="pop-up-buy-ticket">
+              <div className="bg" onClick={() => setIsShowPopUp(false)}></div>
+              <div className="content-popup">
+                <ArrowBackIosIcon
+                  className="ic"
+                  onClick={() => {
+                    setIsShowPopUp(false);
+                  }}
+                />
+                <form onSubmit={handleSubmit(handelBuyTicket)}>
+                  <div>
+                    <div className="label">Enter amount want to buy :</div>
+                    <input
+                      type="number"
+                      min={1}
+                      max={3}
+                      {...register("amount")}
+                    />
+                    <p>{errors.amount && errors.amount.message.toString()}</p>{" "}
+                  </div>{" "}
+                  <input type="submit" value={"OK"} />
+                  <div className="cancel" onClick={() => setIsShowPopUp(false)}>
+                    Cancel
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </Wrapper>
       ) : (
         "No data"
@@ -160,17 +195,6 @@ export const Detail = () => {
 
 // const PopUpBuyTicket = () => {
 //   return (
-//     <div className="pop-up-buy-ticket">
-//       <div className="bg"></div>
-//       <div className="content">
-//         <form onSubmit={handleSubmit(onSubmitt)}>
-//           <div>
-//             <div className="label">Enter amount want to buy :</div>
-//             <input type="number" min={1} max={3} {...register("amount")} />
-//             <p>{errors.amount && errors.amount.message.toString()}</p>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
+//
 //   );
 // };

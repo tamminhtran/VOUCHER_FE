@@ -17,7 +17,7 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,
+    // autoplay: true,
     autoplaySpeed: 1000,
   };
   const [categories, setCategories] = React.useState([]);
@@ -36,10 +36,26 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
     <Wrapper>
       <div className="category">
         <div className="title">Danh mục</div>
-        <div className="prev">
+        <div
+          className="prev"
+          onClick={() => {
+            let el = document.querySelector(
+              ".category .slick-slider .slick-prev"
+            ) as HTMLElement;
+            el.click();
+          }}
+        >
           <KeyboardArrowLeftIcon className="ic" />
         </div>
-        <div className="next">
+        <div
+          className="next"
+          onClick={() => {
+            let el = document.querySelector(
+              ".category .slick-slider .slick-next"
+            ) as HTMLElement;
+            el.click();
+          }}
+        >
           <KeyboardArrowRightIcon className="ic" />
         </div>
         <Slider {...settings}>
@@ -52,6 +68,7 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
                       <img
                         src={`https://drive.google.com/uc?export=view&id=${id}`}
                         alt=""
+                        className="imagee"
                       />
                     </div>
                     <span className="txt">{cat.name}</span>

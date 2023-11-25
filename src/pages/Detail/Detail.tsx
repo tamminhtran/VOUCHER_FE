@@ -113,6 +113,7 @@ export const Detail = () => {
               })
               .catch((err: any) => {
                 toast.error(err.message);
+                setLoading(false);
               });
           }
         })

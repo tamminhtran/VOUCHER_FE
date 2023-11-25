@@ -165,7 +165,7 @@ export const Detail = () => {
             <div className="banner">
               {data.bannerUrl !== null ? (
                 <img
-                  src={`https://drive.google.com/uc?export=view&id=${data.bannerUrl.slice(
+                  src={`https://drive.google.com/uc?export=view&id=${data.thumbnailUrl.slice(
                     32,
                     data.bannerUrl.length - 18
                   )}`}

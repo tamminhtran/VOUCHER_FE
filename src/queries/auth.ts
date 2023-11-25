@@ -41,3 +41,6 @@ export const getUserInfo = () => {
 export const getUserGoogleInfo = () => {
   return http.get(`/user/api/auth2/infor`);
 };
+export const verifyEmail = (tk: string) => {
+  return http.get(`/account/api/verify_email?token=${tk}`);
+};

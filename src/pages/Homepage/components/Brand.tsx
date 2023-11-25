@@ -1,6 +1,6 @@
 import { Wrapper } from "components/Wrapper/Wrapper";
 import React from "react";
-import "./Brand.css";
+import "./Brand.scss";
 import { getMerchants } from "queries/merchant";
 import { toast } from "react-toastify";
 export const Brand = () => {
@@ -26,14 +26,14 @@ export const Brand = () => {
         <div className="list">
           {data &&
             data.slice(0, data.length / 2).map((item: any, key: any) => {
-              return <img src={item.logo_url} alt="" />;
+              return <img src={item.logoUrl} alt="" />;
             })}
         </div>
         <div className="title">Thương hiệu mới</div>
         <div className="list">
           {data &&
             data.slice(data.length / 2).map((item: any, key: any) => {
-              return <img src={item.logo_url} alt="" />;
+              return <img src={item.logoUrl} alt="" />;
             })}
         </div>
       </div>

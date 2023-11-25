@@ -161,59 +161,62 @@ export const OrdersTab = ({ info }: { info: any }) => {
                         {order.status === 1 ? "Active" : "Deactive"}
                       </StyledTableCell>
                     </StyledTableRow>
-                    {true && (
-                      <>
-                        <TableRow id="tickets-head">
-                          <StyledTableCell></StyledTableCell>
-                          <StyledTableCell align="right"></StyledTableCell>
-                          <StyledTableCell align="right">
-                            Ticket ID
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            Serial Code
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            Availabel To
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            Action
-                          </StyledTableCell>
-                        </TableRow>
-                        <StyledTableRow
-                          id="tickets-row"
-                          key={order.id}
-                          onClick={() => navigate(``)}
-                        >
-                          <StyledTableCell
-                            component="th"
-                            scope="row"
-                          ></StyledTableCell>
-                          <StyledTableCell align="right"></StyledTableCell>
-                          <StyledTableCell align="right">{1}</StyledTableCell>
-                          <StyledTableCell align="right">
-                            {"87fdknkm"}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {moment(order.idWarehouseDTO.availableTo).format(
-                              "llll"
-                            )}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            align="right"
-                            className={
-                              order.status === 1 ? "active" : " deactive"
-                            }
-                            onClick={() => {
-                              handleUseTicket("uhfd87");
-                            }}
-                          >
-                            <div id="btn-use">
-                              {order.status === 1 ? "Use" : "Used"}
-                            </div>
-                          </StyledTableCell>
-                        </StyledTableRow>{" "}
-                      </>
+                    {order.listTicketDTO && (
+                      <TableRow id="tickets-head">
+                        <StyledTableCell></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right">
+                          Ticket ID
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Serial Code
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          Availabel To
+                        </StyledTableCell>
+                        <StyledTableCell align="right">Action</StyledTableCell>
+                      </TableRow>
                     )}
+                    {order.listTicketDTO &&
+                      order.listTicketDTO.map((item: any, key: any) => {
+                        return (
+                          <StyledTableRow
+                            id="tickets-row"
+                            key={key}
+                            onClick={() => navigate(``)}
+                          >
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                            ></StyledTableCell>
+                            <StyledTableCell align="right"></StyledTableCell>
+                            <StyledTableCell align="right">
+                              {item.id}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              {item.idSerialDTO.serialCode}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              {moment(order.idWarehouseDTO.availableTo).format(
+                                "llll"
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              align="right"
+                              className={
+                                order.status === 1 ? "active" : " deactive"
+                              }
+                              onClick={() => {
+                                handleUseTicket(item.idSerialDTO.serialCode);
+                              }}
+                            >
+                              <div id="btn-use">
+                                {order.status === 1 ? "Use" : "Used"}
+                              </div>
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        );
+                      })}
                   </>
                 ))}
               </TableBody>

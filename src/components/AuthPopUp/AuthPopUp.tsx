@@ -13,8 +13,6 @@ import { useDispatch } from "react-redux";
 import { Loading } from "components/Loading/Loading";
 import { forgotPassword } from "queries/auth";
 import { schemaForgotPassword } from "validate";
-import { schemaSetPassword } from "validate";
-import { setPassword } from "queries/auth";
 import { Link } from "react-router-dom";
 // import { getUserGoogleInfo } from "queries/auth";
 
@@ -49,13 +47,6 @@ export const AuthPopUp = ({
     formState: { errors: errors3 },
   } = useForm({
     resolver: yupResolver(schemaForgotPassword),
-  });
-  const {
-    register: register4,
-    handleSubmit: handleSubmit4,
-    formState: { errors: errors4 },
-  } = useForm({
-    resolver: yupResolver(schemaSetPassword),
   });
 
   const onSubmitSignIn = async (data: any) => {
@@ -110,32 +101,7 @@ export const AuthPopUp = ({
         toast.error("Something went wrong");
       });
   };
-  const onSetPassword = async (data: any) => {
-    setLoading(true);
-    let obj = {
-      email: validEmail,
-      newPassword: data.newpass,
-    };
-    setPassword(obj)
-      .then((rs: any) => {
-        if (rs) {
-          setLoading(false);
-          toast.success(rs.message);
-          setIsForgotPassword(false);
-        }
-      })
-      .catch((er: any) => {
-        toast.error("Something went wrong");
-        setLoading(false);
-      });
-  };
-  React.useEffect(() => {
-    // getUserGoogleInfo()
-    //   .then((rs: any) => {
-    //     console.log(rs);
-    //   })
-    //   .catch((err: any) => toast.error(err.message));
-  });
+
   return (
     <div className="auth-pop-up">
       <div className="bg" onClick={() => setVisibility(false)}></div>

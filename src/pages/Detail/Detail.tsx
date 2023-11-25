@@ -22,7 +22,6 @@ import { selectAccessToken } from "redux/features/auth/authSlice";
 export const Detail = () => {
   let { id } = useParams();
   const [data, setData] = React.useState<any>();
-  const [idStore, setIdStore] = React.useState<any>();
   const [userData, setUserData] = React.useState<any>();
   const [isShowPopUp, setIsShowPopUp] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -59,21 +58,6 @@ export const Detail = () => {
         toast.error(err.message);
       });
   }, [id]);
-  React.useEffect(() => {
-    if (data) {
-      getAllWarehouseStore()
-        .then((rs: any) => {
-          if (rs) {
-            setIdStore(
-              rs.data.find((item: any) => item.idWarehouse === data.id).idStore
-            );
-          }
-        })
-        .catch((err: any) => {
-          toast.error(err.message);
-        });
-    }
-  }, [data]);
 
   const addOrder = (amount: Number) => {
     let obj: IOrder = {

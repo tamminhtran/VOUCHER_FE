@@ -8,6 +8,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { getAllCategory } from "queries/category";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export interface IDivContainerProps {}
 
 export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
@@ -21,6 +22,7 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
     autoplaySpeed: 1000,
   };
   const [categories, setCategories] = React.useState([]);
+  const navigate = useNavigate();
   React.useEffect(() => {
     getAllCategory()
       .then((rs: any) => {
@@ -63,7 +65,13 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
             ? categories.map((cat: any, key) => {
                 let id = cat.bannerUrl.slice(32, cat.bannerUrl.length - 18);
                 return (
-                  <div className="card-cate" key={key}>
+                  <div
+                    className="card-cate"
+                    key={key}
+                    onClick={() => {
+                      navigate(`/category/${cat.id}`);
+                    }}
+                  >
                     <div className="bg">
                       <img
                         src={`https://drive.google.com/uc?export=view&id=${id}`}

@@ -167,27 +167,7 @@ export const AuthPopUp = ({
           </div>
         ) : (
           <div className="content">
-            <form onSubmit={handleSubmit4(onSetPassword)}>
-              <div>
-                <input defaultValue={""} id="hide" />
-              </div>
-              <div>
-                <label>Enter valid new password</label>
-                <input {...register4("newpass")} />
-                {errors4.newpass && <p>{errors4.newpass.message.toString()}</p>}
-              </div>
-              <div>
-                <label>Confirm new password</label>
-                <input {...register4("confirmnewpass")} />
-                {errors4.confirmnewpass && (
-                  <p>{errors4.confirmnewpass.message.toString()}</p>
-                )}
-              </div>
-              <input type="submit" value="OK" />
-              <div className="cancel" onClick={() => setValidEmail("")}>
-                Cancel
-              </div>
-            </form>
+            <span>Please check your email for reset password link !</span>
           </div>
         )
       ) : (

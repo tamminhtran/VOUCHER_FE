@@ -14,6 +14,7 @@ export const Card = (props: ICardProps) => {
   const navigate = useNavigate();
   console.log(props);
   let id = props.img && props.img.slice(32, props.img.length - 18);
+  console.log(id);
   return (
     <div
       className="card"

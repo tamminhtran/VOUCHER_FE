@@ -61,6 +61,7 @@ export const schemaBuyTicket = yup
 export const schemaSetPassword = yup
   .object()
   .shape({
+    mail: yup.string().email().required(),
     newpass: yup
       .string()
       .required()

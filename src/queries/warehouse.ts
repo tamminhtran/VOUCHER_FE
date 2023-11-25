@@ -10,3 +10,6 @@ export const getAllWarehouse = () => {
 export const getWarehouseDetail = (id: any) => {
   return http.get(`/warehouse/api/${id}`);
 };
+export const getWarehouseByCategoryId = (id: any) => {
+  return http.get(`/warehouse/CategoryId/${id}`);
+};

@@ -48,8 +48,6 @@ export const Detail = () => {
         });
     }
   }, [token]);
-
-  console.log(data);
   React.useEffect(() => {
     getWarehouseDetail(id)
       .then((rs: any) => {
@@ -78,19 +76,11 @@ export const Detail = () => {
   }, [data]);
 
   const addOrder = (amount: Number) => {
-    // let obj: IOrder = {
-    //   status: 1,
-    //   idUser: userData.id,
-    //   quantity: amount,
-    //   idWarehouse: data.id,
-    //   idStore: idStore ? idStore : null,
-    // };
     let obj: IOrder = {
       status: 1,
       idUserDTO: { id: userData.id },
       quantity: amount,
       idWarehouseDTO: { id: data.id },
-      //   idStore: idStore ? idStore : null,
     };
     return addOrderAsync(obj);
   };
@@ -100,10 +90,6 @@ export const Detail = () => {
       addOrder(dt.amount)
         .then((rs: any) => {
           if (rs) {
-            if (!idStore) {
-              toast.error("Something went wrong");
-              return;
-            }
             let payload: IBuyTicket = {
               obj: {
                 idWarehouseDTO: { id: rs.data.idWarehouseDTO.id },
@@ -113,23 +99,36 @@ export const Detail = () => {
                 discountType: rs.data.discountName,
                 discountAmount: rs.data.idWarehouseDTO.discountAmount,
                 idUserDTO: { id: rs.data.idUserDTO.id },
-                idStoreDTO: { id: idStore },
+                // idStoreDTO: { id: idStore },
               },
               email: rs.data.idUserDTO.email,
               numberOfSerial: dt.amount,
             };
-            buyTicket(payload)
+            getAllWarehouseStore()
               .then((rs: any) => {
                 if (rs) {
-                  setLoading(false);
-                  setIsShowPopUp(false);
-                  toast.success(rs.message);
-                  navigate("/profile");
+                  let _id = rs.data.find(
+                    (item: any) => item.idWarehouse === data.id
+                  ).idStore;
+                  let ob = { ...payload };
+                  ob.obj.idStoreDTO = { id: _id };
+                  buyTicket(ob)
+                    .then((rs: any) => {
+                      if (rs) {
+                        setLoading(false);
+                        setIsShowPopUp(false);
+                        toast.success(rs.message);
+                        navigate("/profile");
+                      }
+                    })
+                    .catch((err: any) => {
+                      toast.error(err.message);
+                      setLoading(false);
+                    });
                 }
               })
               .catch((err: any) => {
                 toast.error(err.message);
-                setLoading(false);
               });
           }
         })

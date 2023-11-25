@@ -13,6 +13,6 @@ export const addOrderAsync = (obj: IOrder) => {
   return http.post("/order/api/add-order", obj);
 };
 
-export const getOrderByUser = () => {
-  return http.get("/order/api/list-order");
+export const getOrderByUser = (id: Number) => {
+  return http.get(`/order/api/get_all_oder_user/${id}`);
 };

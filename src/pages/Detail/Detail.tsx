@@ -48,6 +48,8 @@ export const Detail = () => {
         });
     }
   }, [token]);
+
+  console.log(data);
   React.useEffect(() => {
     getWarehouseDetail(id)
       .then((rs: any) => {
@@ -75,7 +77,6 @@ export const Detail = () => {
     }
   }, [data]);
 
-  console.log(idStore);
   const addOrder = (amount: Number) => {
     // let obj: IOrder = {
     //   status: 1,

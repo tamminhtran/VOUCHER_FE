@@ -1,50 +1,41 @@
 import { Wrapper } from "components/Wrapper/Wrapper";
 import React from "react";
 import "./Brand.css";
-import Brand1 from "assets/homepage/brand1.png";
-import Brand2 from "assets/homepage/brand2.png";
-import Brand3 from "assets/homepage/brand3.png";
-import Brand4 from "assets/homepage/brand4.png";
-import Brand5 from "assets/homepage/brand5.png";
-import Brand6 from "assets/homepage/brand6.png";
-import Brand7 from "assets/homepage/brand7.png";
-import Brand8 from "assets/homepage/brand8.png";
-import Newbrand1 from "assets/homepage/newbrand1.png";
-import Newbrand2 from "assets/homepage/newbrand2.png";
-import Newbrand3 from "assets/homepage/newbrand3.png";
-import Newbrand4 from "assets/homepage/newbrand4.png";
-import Newbrand5 from "assets/homepage/newbrand5.png";
-import Newbrand6 from "assets/homepage/newbrand6.png";
-import Newbrand7 from "assets/homepage/newbrand7.png";
-import Newbrand8 from "assets/homepage/newbrand8.png";
-export const Brand = ({ title, isNew }: any) => {
+import { getMerchants } from "queries/merchant";
+import { toast } from "react-toastify";
+export const Brand = () => {
+  const [data, setData] = React.useState<any>();
+  React.useEffect(() => {
+    getMerchants()
+      .then((rs: any) => {
+        if (rs) {
+          setData(rs.data);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
+  }, []);
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8];
+  console.log(arr.slice(0, arr.length / 2));
+  console.log(arr.slice(-arr.length / 2));
   return (
     <Wrapper>
       <div className="brand">
-        <div className="title">{title}</div>
-        {isNew ? (
-          <div className="list">
-            <img src={Brand1} alt="" />
-            <img src={Brand2} alt="" />
-            <img src={Brand3} alt="" />
-            <img src={Brand4} alt="" />
-            <img src={Brand5} alt="" />
-            <img src={Brand6} alt="" />
-            <img src={Brand7} alt="" />
-            <img src={Brand8} alt="" />
-          </div>
-        ) : (
-          <div className="list">
-            <img src={Newbrand1} alt="" />
-            <img src={Newbrand2} alt="" />
-            <img src={Newbrand3} alt="" />
-            <img src={Newbrand4} alt="" />
-            <img src={Newbrand5} alt="" />
-            <img src={Newbrand6} alt="" />
-            <img src={Newbrand7} alt="" />
-            <img src={Newbrand8} alt="" />
-          </div>
-        )}
+        <div className="title">Thương hiệu nổi bật</div>
+        <div className="list">
+          {data &&
+            data.slice(0, data.length / 2).map((item: any, key: any) => {
+              return <img src={item.logo_url} alt="" />;
+            })}
+        </div>
+        <div className="title">Thương hiệu mới</div>
+        <div className="list">
+          {data &&
+            data.slice(data.length / 2).map((item: any, key: any) => {
+              return <img src={item.logo_url} alt="" />;
+            })}
+        </div>
       </div>
     </Wrapper>
   );

@@ -10,6 +10,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: 29px; /* 120.833% */
+    margin-top: 80px;
   }
   .list {
     display: flex;
@@ -19,6 +20,12 @@
     overflow: scroll;
     &::-webkit-scrollbar {
       display: none;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      max-width: 80px;
+      border-radius: 7px;
     }
   }
 }

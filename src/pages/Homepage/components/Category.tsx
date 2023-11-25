@@ -63,7 +63,6 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
         <Slider {...settings}>
           {categories
             ? categories.map((cat: any, key) => {
-                let id = cat.bannerUrl.slice(32, cat.bannerUrl.length - 18);
                 return (
                   <div
                     className="card-cate"
@@ -73,11 +72,7 @@ export const Category = ({ ...props }: IDivContainerProps): JSX.Element => {
                     }}
                   >
                     <div className="bg">
-                      <img
-                        src={`https://drive.google.com/uc?export=view&id=${id}`}
-                        alt=""
-                        className="imagee"
-                      />
+                      <img src={cat.bannerUrl} alt="" className="imagee" />
                     </div>
                     <span className="txt">{cat.name}</span>
                   </div>

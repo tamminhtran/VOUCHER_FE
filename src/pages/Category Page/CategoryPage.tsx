@@ -37,9 +37,9 @@ export const CategoryPage = () => {
           <div className="list">
             {data &&
               data.map((item: any, key: any) => {
-                let id =
-                  item.bannerUrl &&
-                  item.bannerUrl.slice(32, item.bannerUrl.length - 18);
+                // let id =
+                //   item.bannerUrl &&
+                //   item.bannerUrl.slice(32, item.bannerUrl.length - 18);
                 return (
                   <div
                     className="card"
@@ -50,7 +50,8 @@ export const CategoryPage = () => {
                   >
                     <div className="top">
                       <img
-                        src={`https://drive.google.com/uc?export=view&id=${id}`}
+                        // src={`https://drive.google.com/uc?export=view&id=${id}`}
+                        src={item.bannerUrl}
                         alt=""
                       />
                       {item.isSoldout && (

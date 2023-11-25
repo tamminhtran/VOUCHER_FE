@@ -26,3 +26,9 @@ export const buyTicket = (payload: IBuyTicket) => {
     payload.obj
   );
 };
+export const detailTicket = (payload: any) => {
+  return http.get(`/ticket/api/ticket_detail`, { data: payload });
+};
+export const onUseTicket = (code: any) => {
+  return http.put(`/ticket/api/use-ticket?serialCode=${code}`);
+};

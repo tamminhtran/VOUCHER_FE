@@ -25,7 +25,6 @@ export const Header = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (token) {
-      console.log("fsdf");
       getUserInfo()
         .then((rs: any) => {
           if (rs) {

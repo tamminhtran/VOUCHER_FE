@@ -54,7 +54,7 @@ export const Profile = () => {
           </div>
           <div className="right">
             {activeTab === 0 && info && <AccountTab data={info} />}
-            {activeTab === 1 && <OrdersTab />}
+            {activeTab === 1 && <OrdersTab info={info} />}
           </div>
         </div>
       ) : (

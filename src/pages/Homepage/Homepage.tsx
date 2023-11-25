@@ -36,8 +36,7 @@ export const Homepage = () => {
   return (
     <div className="homepage">
       <Overview />
-      <Brand title="Thương hiệu nổi bật" isNew={false} />
-      <Brand title="Thương hiệu mới" isNew={true} />
+      <Brand />
       <Category />
       {labels &&
         labels.map((lb, key) => {

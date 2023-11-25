@@ -148,14 +148,15 @@ export const Detail = () => {
           <div className="content">
             <div className="banner">
               {data.bannerUrl !== null ? (
-                <img
-                  src={`https://drive.google.com/uc?export=view&id=${data.thumbnailUrl.slice(
-                    32,
-                    data.bannerUrl.length - 18
-                  )}`}
-                  alt=""
-                  className="imagee"
-                />
+                // <img
+                //   src={`https://drive.google.com/uc?export=view&id=${data.thumbnailUrl.slice(
+                //     32,
+                //     data.bannerUrl.length - 18
+                //   )}`}
+                //   alt=""
+                //   className="imagee"
+                // />
+                <img src={data.bannerUrl} alt="" className="imagee" />
               ) : (
                 <img src={require(`assets/detail/default.jpg`)} alt="" />
               )}

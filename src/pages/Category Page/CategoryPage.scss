@@ -4,7 +4,7 @@
   margin: 48px 0px;
   width: 100%;
   .path {
-    color: rgba(1, 18, 34, 0.3);
+    color: rgba(1, 18, 34, 0.942);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -18,10 +18,11 @@
       font-size: 14px;
     }
     &:hover {
-      color: black;
+      color: rgb(24, 191, 238);
     }
   }
   .list {
+    margin: 58px 0px;
     width: 100%;
     display: flex;
     flex-direction: row;

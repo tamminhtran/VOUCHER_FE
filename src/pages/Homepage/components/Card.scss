@@ -16,8 +16,10 @@
   .top {
     width: 100%;
     max-width: 284px;
+    max-height: 284px;
     border-radius: 5.25px;
     position: relative;
+    overflow: hidden;
     img {
       width: 100%;
     }
